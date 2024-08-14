@@ -3,9 +3,9 @@ import Link from 'next/link';
 
 const NotFound = () => {
   return (
-    <div className='mt-[4rem] flex flex-col items-center gap-6'>
+    <div className='mt-[4rem] flex flex-col items-center gap-6 p-5'>
       <div className=''>
-        <Image src='/404.svg' width={600} height={600} alt='not_found_image' className='object-cover'/>
+        <Image src='/404.svg' width={600} height={600} priority={true} alt='not_found_image' className='object-cover'/>
       </div>
       <div className='flex flex-col items-center gap-6'>
         <h1 className='text-4xl font-bold'>Oops! Page Not Found.</h1>
