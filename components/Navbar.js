@@ -27,7 +27,7 @@ function Navbar() {
         <div className="logo">Logo</div>
         <ul className="pages flex gap-8 text-gray-500 ">
             {navItems.map( (item) => (
-                    <li key={item.path} className='hover:text-black'>
+                    <li key={item.path} className='hover:text-black capitalize'>
                         <Link href={item.path}>
                             {item.name}
                         </Link>
