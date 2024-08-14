@@ -1,8 +1,8 @@
 
 export default function Home() {
   return (
-    <main>
-      Home Page
+    <main className="min-h-screen ">
+      home page
     </main>
   );
 }
