@@ -16,34 +16,43 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   providers: [
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
       allowDangerousEmailAccountLinking: true,
     }),
-    // Github({
-    //   clientId: process.env.GITHUB_CLIENT_ID,
-    //   clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    // })
+    Github({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    })
   ],
   callbacks: {
-    async jwt({token, user}) {
+    async jwt({ token, user }) {
       if (user) {
         return {
           ...token,
           id: user.id,
-        }
+          name: user.name,
+          email: user.email,
+          picture: user.image,
+        };
       }
+      return token;
     },
-
-    async session({session, token}) {
-      console.log("session callback", { session, token });
+    
+    async session({ session, token }) {
+      if (!session.user) {
+        session.user = {};
+      }
       return {
         ...session,
         user: {
           ...session.user,
-          id: token.id,
-        }
-      }
+          id: token.id || null,
+          name: token.name || '',
+          email: token.email || '',
+          image: token.picture || '',
+        },
+      };
     },
   }
 })
