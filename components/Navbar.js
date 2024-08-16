@@ -34,7 +34,7 @@ function Navbar() {
         <nav className='sticky top-0 z-9999 w-full bg-white py-6 max-[500px]:py-0 px-20 max-[500px]:px-3 flex justify-evenly items-center shadow max-lg:justify-between '>
             <div className="logo flex-1">
                 <Link href='/'>
-                    <Image src={logo} alt='logo' priority={true} quality={100} className='max-[500px]:h-[100px] max-[500px]:w-[100px] '/>
+                    <Image src={logo} alt='logo' priority={true} quality={100} className='max-[500px]:h-[100px] max-[500px]:w-[100px]'/>
                 </Link>
             </div>
             <ul className="pages flex gap-8 text-gray-500 max-lg:hidden flex-1 justify-center ">

@@ -4,14 +4,13 @@ import { checkIsAuthenticated } from '@/lib/auth/checkIsAuthenticated';
 import { Login } from '@/lib/auth/handleCredentialSigning';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import React from 'react';
 
 const SignIn = async () => {
   const isAuthenticated = await checkIsAuthenticated();
+  if(isAuthenticated){
+    redirect('/');
+  }
 
-  if (isAuthenticated) {
-    redirect("/");
-  } else {
     return (
       <div className='w-full min-h-screen flex justify-center items-center px-4'>
         <div className='w-[35rem] flex flex-col gap-10 items-center border rounded-xl px-14 py-16 shadow-xl max-sm:px-10 max-sm:py-12 max-sm:w-[30rem]'>
@@ -28,7 +27,12 @@ const SignIn = async () => {
             <div className='flex-1 text-gray-500 text-sm text-center'>Or with credentials</div>
             <div className='flex-1 h-[1px] bg-gray-500'></div>
           </div>
-          <form action={Login} className='w-full'>
+          <form 
+          action={async (formData)=> {
+            "use server"
+            await Login(formData)
+          }}
+          className='w-full'>
             <div className='flex flex-col gap-4 w-full'>
               <div className='flex flex-col gap-2 w-full'>
                 <label htmlFor="email" className='font-medium text-sm text-gray-700'>Email</label>
@@ -36,8 +40,9 @@ const SignIn = async () => {
               </div>
               <div className='flex flex-col gap-2 w-full'>
                 <label htmlFor="password" className='font-medium text-sm text-gray-700'>Password</label>
-                <input type="password" id='email' name='password' placeholder='Enter your password' className='border rounded-lg px-6 py-4' />
+                <input type="password" id='password' name='password' placeholder='Enter your password' className='border rounded-lg px-6 py-4' />
               </div>
+              {/* {error && <p className="text-red-500">{error}</p>} */}
               <button type='submit' className='w-full border border-stone-50 text-center py-4 bg-black hover:bg-black/90 text-white font-medium rounded-md'>Sign in</button>
             </div>
           </form>
@@ -45,7 +50,6 @@ const SignIn = async () => {
         </div>
       </div>
     )
-  }
 }
 
 export default SignIn;
