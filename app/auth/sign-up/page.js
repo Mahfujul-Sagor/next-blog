@@ -2,6 +2,7 @@
 
 import GithubSigning from '@/components/GithubSigning';
 import GoogleSigning from '@/components/GoogleSigning';
+import { Button, Input } from '@material-tailwind/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react'
@@ -59,19 +60,16 @@ const SignUp = () => {
           </div>
           <form onSubmit={handleSubmit} className='w-full'>
             <div className='flex flex-col gap-4 w-full'>
-              <div className='flex flex-col gap-2 w-full'>
-                <label htmlFor="name" className='font-medium text-sm text-gray-700'>Name</label>
-                <input type="text" id='name' name='name' placeholder='Enter your name' className='border rounded-lg px-6 py-4' />
+              <div className='w-full'>
+                <Input label="Name" type='text' name='name' size='lg' />
               </div>
-              <div className='flex flex-col gap-2 w-full'>
-                <label htmlFor="email" className='font-medium text-sm text-gray-700'>Email</label>
-                <input type="email" id='email' name='email' placeholder='Enter your email' className='border rounded-lg px-6 py-4' />
+              <div className='w-full'>
+                <Input label="Email" type='email' name='email' size='lg' />
               </div>
-              <div className='flex flex-col gap-2 w-full'>
-                <label htmlFor="password" className='font-medium text-sm text-gray-700'>Password</label>
-                <input type="password" id='password' name='password' placeholder='Enter your password' className='border rounded-lg px-6 py-4' />
+              <div className='w-full'>
+                <Input label="Password" type='password' name='password' size='lg' />
               </div>
-              <button type='submit' className='w-full border border-stone-50 text-center py-4 bg-black hover:bg-black/90 text-white font-medium rounded-md'>Sign up</button>
+              <Button type='submit' fullWidth size='lg'>Sign up</Button>
             </div>
           </form>
           <p>Already have an account? <Link href='/auth/sign-in' className='text-blue-600'>Sign in</Link></p>
