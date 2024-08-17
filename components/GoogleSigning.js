@@ -7,7 +7,7 @@ import { handleGoogleSignIn } from '@/lib/auth/handleGoogleSignIn';
 const GoogleSigning = ({text}) => {
   return (
     <div className='border rounded-lg flex items-center justify-center outline-none'>
-      <button onClick={()=> handleGoogleSignIn()} className='flex gap-2 items-center justify-center w-full h-full py-4 bg-white lg:hover:bg-stone-50 rounded-lg'>
+      <button onClick={()=> handleGoogleSignIn()} className='flex gap-2 items-center justify-center w-full h-full py-4 lg:hover:bg-stone-50 rounded-lg'>
         <FcGoogle className='text-2xl'/>
         <span className=''>Sign {text} with Google</span>
       </button>

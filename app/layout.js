@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,13 +14,20 @@ export const metadata = {
 export default function RootLayout({ children, session }) {
   return (
     <html lang="en">
-        <body className={inter.className}>
-              <Header />
-              <div className=" px-20 max-[500px]:px-3">
-                {children}
-              </div>
-              <Footer />
-        </body>
+          <body className={inter.className}>
+        <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+        >
+          <Header />
+          <div className=" px-20 max-[500px]:px-3">
+            {children}
+          </div>
+          <Footer />
+        </ThemeProvider>
+          </body>
     </html>
   );
 }

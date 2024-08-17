@@ -6,12 +6,14 @@ import { IoMenuOutline } from "react-icons/io5";
 import Sidebar from './Sidebar';
 import Image from 'next/image';
 import logo from '@/public/logo.svg'
+import { ModeToggle } from './ModeToggle';
+import { Button } from '@material-tailwind/react';
 
 function Navbar() {
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
-        setOpen(!open)
+        setOpen(!open);
     }
 
     const navItems = [
@@ -31,15 +33,15 @@ function Navbar() {
 
   return (
     <>
-        <nav className='sticky top-0 z-9999 w-full bg-white py-6 max-[500px]:py-0 px-20 max-[500px]:px-3 flex justify-evenly items-center shadow max-lg:justify-between '>
+        <nav className='sticky backdrop-blur-2xl top-0 z-9999 border-b w-full py-6 max-[500px]:py-0 px-20 max-[500px]:px-3 flex justify-evenly items-center shadow max-lg:justify-between '>
             <div className="logo flex-1">
                 <Link href='/'>
                     <Image src={logo} alt='logo' priority={true} quality={100} className='max-[500px]:h-[100px] max-[500px]:w-[100px]'/>
                 </Link>
             </div>
-            <ul className="pages flex gap-8 text-gray-500 max-lg:hidden flex-1 justify-center ">
+            <ul className="pages flex gap-8 max-lg:hidden flex-1 justify-center ">
                 {navItems.map( (item) => (
-                    <li key={item.path} className='hover:text-black capitalize'>
+                    <li key={item.path} className='capitalize'>
                         <Link href={item.path}>
                             {item.name}
                         </Link>
@@ -47,8 +49,9 @@ function Navbar() {
                 ))}
             </ul>
             <div className='flex justify-end items-center gap-6 flex-1  '>
-                <button className='bg-gray-900 text-white py-2 px-3 rounded-md max-[500px]:py-1 max-[500px]:text-md '>Sign In</button>
-                <div className='hidden max-lg:flex ' onClick={handleOpen}>
+                <div><ModeToggle/></div>
+                <Button>Sign In</Button>
+                <div className='hidden max-lg:flex' onClick={handleOpen}>
                     <IoMenuOutline className='text-3xl'/>
                 </div>
             </div>

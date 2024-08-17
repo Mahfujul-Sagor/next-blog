@@ -22,8 +22,8 @@ function Sidebar() {
     ]
 
   return (
-    <div className='hidden bg-white shadow-lg fixed top-[90px] right-0 w-[50vw] border-l min-h-screen z-9999 max-lg:flex '>
-        <ul className="pages w-full mt-10 flex flex-col items-center text-black ">
+    <div className='hidden border-b shadow-lg fixed top-[90px] right-0 w-[50vw] border-l min-h-screen z-9999 max-lg:flex '>
+        <ul className="pages w-full mt-10 flex flex-col items-center">
             {navItems.map( (item) => (
                 <li key={item.path} className='capitalize py-4 w-full text-center'>
                     <Link href={item.path}>
