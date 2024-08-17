@@ -1,6 +1,3 @@
-import { Typography } from "@material-tailwind/react";
-import Image from "next/image";
-import logo from '@/public/logo.svg';
 import Link from "next/link";
 function Footer() {
   return (
@@ -23,4 +20,4 @@ function Footer() {
   )
 }
 
-export default Footer
+export default Footer;

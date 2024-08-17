@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "../components/Header";
-import { FooterWithLogo } from "../components/Footer";
+import Footer from "../components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +15,7 @@ export default function RootLayout({ children, session }) {
     <html lang="en">
         <body className={inter.className}>
               <Header />
-              <div className=" px-20 max-[500px]:px-3 ">
+              <div className=" px-20 max-[500px]:px-3">
                 {children}
               </div>
               <Footer />

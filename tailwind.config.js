@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import tailwindcssAnimate from 'tailwindcss-animate';
 import withMT from "@material-tailwind/react/utils/withMT";
 module.exports = withMT({
   darkMode: ["class"],
@@ -74,5 +75,5 @@ module.exports = withMT({
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 })
