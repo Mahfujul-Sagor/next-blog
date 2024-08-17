@@ -1,5 +1,10 @@
-import Link from 'next/link'
-import React from 'react'
+import { Typography } from "@material-tailwind/react";
+import Image from "next/image";
+import logo from '@/public/logo.svg';
+import Link from "next/link";
+ 
+export function FooterWithLogo() {
+  return (
 
 function Footer() {
   return (
