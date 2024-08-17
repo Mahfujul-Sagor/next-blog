@@ -2,13 +2,16 @@
 
 import GithubSigning from '@/components/GithubSigning';
 import GoogleSigning from '@/components/GoogleSigning';
-import { Button, Input } from '@material-tailwind/react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react'
+import React, { useState } from 'react'
 
 const SignUp = () => {
   const router = useRouter();
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,6 +22,7 @@ const SignUp = () => {
     const password = formData.get('password');
   
     if (!name || !email || !password) {
+      setError('Please fill all the fields');
       console.error('Please fill all the fields');
       return;
     }
@@ -36,9 +40,11 @@ const SignUp = () => {
         router.push('/auth/sign-in');
       } else {
         const errorData = await response.json();
+        setError(errorData.message);
         console.error(errorData.message);
       }
     } catch (error) {
+      setError('Could not register');
       console.error('Could not register:', error);
     }
   };
@@ -61,15 +67,19 @@ const SignUp = () => {
           <form onSubmit={handleSubmit} className='w-full'>
             <div className='flex flex-col gap-4 w-full'>
               <div className='w-full'>
-                <Input label="Name" type='text' name='name' size='lg' />
+                <Label htmlFor="name">Name</Label>
+                <Input type='text' id='name' name='name' placeholder='name' />
               </div>
               <div className='w-full'>
-                <Input label="Email" type='email' name='email' size='lg' />
+                <Label htmlFor="email">Email</Label>
+                <Input type='email' id='email' name='email' placeholder='email' />
               </div>
               <div className='w-full'>
-                <Input label="Password" type='password' name='password' size='lg' />
+                <Label htmlFor="password">Password</Label>
+                <Input type='password' id='password' name='password' placeholder='password' className='py-2' />
               </div>
-              <Button type='submit' fullWidth size='lg'>Sign up</Button>
+              {error && <p className='text-red-500'>{error}</p>}
+              <Button type='submit' size='lg'>Sign up</Button>
             </div>
           </form>
           <p>Already have an account? <Link href='/auth/sign-in' className='text-blue-600'>Sign in</Link></p>

@@ -7,7 +7,7 @@ import Sidebar from './Sidebar';
 import Image from 'next/image';
 import logo from '@/public/logo.svg'
 import { ModeToggle } from './ModeToggle';
-import { Button } from '@material-tailwind/react';
+import { Button } from './ui/button';
 
 function Navbar() {
     const [open, setOpen] = useState(false);

@@ -8,7 +8,7 @@ import { FaGithub } from "react-icons/fa";
 const GithubSigning = ({text}) => {
   return (
     <div className='border rounded-lg flex items-center justify-center'>
-      <button onClick={()=> handleGithubSignIn()} className='flex gap-2 items-center justify-center w-full h-full py-4 lg:hover:bg-stone-50 rounded-lg'>
+      <button onClick={()=> handleGithubSignIn()} className='flex gap-2 items-center justify-center w-full h-full py-4 rounded-lg'>
         <FaGithub className='text-2xl'/>
         <span className=''>Sign {text} with Github</span>
       </button>

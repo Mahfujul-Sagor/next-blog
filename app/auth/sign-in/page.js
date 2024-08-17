@@ -3,11 +3,13 @@
 import GithubSigning from '@/components/GithubSigning';
 import GoogleSigning from '@/components/GoogleSigning';
 import Loader from '@/components/Loader';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { checkIsAuthenticated } from '@/lib/auth/checkIsAuthenticated';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Input,Button } from "@material-tailwind/react";
 
 const SignIn = () => {
   const router = useRouter();
@@ -74,13 +76,15 @@ const SignIn = () => {
           className='w-full'>
             <div className='flex flex-col gap-4 w-full'>
               <div className='w-full'>
-                <Input label="Email" type='email' name='email' size='lg' />
+                <Label htmlFor="email">Email</Label>
+                <Input type='email' id='email' name='email' placeholder='email' />
               </div>
               <div className='w-full'>
-                <Input label="Password" type='password' name='password' size='lg' />
+              <Label htmlFor="password">Password</Label>
+                <Input type='password' id='password' name='password' placeholder='password' />
               </div>
               {error && <p className='text-red-500'>{error}</p>}
-              <Button type='submit' fullWidth size='lg'>Sign in</Button>
+              <Button type='submit' size='lg'>Sign in</Button>
             </div>
           </form>
           <p>Don&apos;t have an account? <Link href='/auth/sign-up' className='text-blue-600'>Sign up</Link></p>

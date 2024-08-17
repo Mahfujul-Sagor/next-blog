@@ -34,7 +34,7 @@ function About() {
         </div>
 
         <div className="authors my-16 flex flex-wrap items-center justify-center gap-8">
-          <div className='bg-stone-100 p-5 max-sm:p-3 flex items-center gap-8 max-sm:gap-4 rounded-xl border border-gray-3 w-[25rem] max-sm:flex-col '>
+          <div className=' p-5 max-sm:p-3 flex items-center gap-8 max-sm:gap-4 rounded-xl border border-gray-3 w-[25rem] max-sm:flex-col '>
             <div>
               <Image src={user} width={100} height={100} alt='author' className='rounded-full' />
             </div>
@@ -48,7 +48,7 @@ function About() {
             </div>
           </div>
           
-          <div className='bg-stone-100 p-5 max-sm:p-3 flex items-center gap-8 max-sm:gap-4 rounded-xl border border-gray-3 w-[25rem] max-sm:flex-col '>
+          <div className=' p-5 max-sm:p-3 flex items-center gap-8 max-sm:gap-4 rounded-xl border border-gray-3 w-[25rem] max-sm:flex-col '>
             <div>
               <Image src={user} width={100} height={100} alt='author' className='rounded-full' />
             </div>
@@ -62,7 +62,7 @@ function About() {
             </div>
           </div>
 
-          <div className='bg-stone-100 p-5 max-sm:p-3 flex items-center gap-8 max-sm:gap-4 rounded-xl border border-gray-3 w-[25rem] max-sm:flex-col '>
+          <div className=' p-5 max-sm:p-3 flex items-center gap-8 max-sm:gap-4 rounded-xl border border-gray-3 w-[25rem] max-sm:flex-col '>
             <div>
               <Image src={user} width={100} height={100} alt='author' className='rounded-full' />
             </div>
@@ -81,4 +81,4 @@ function About() {
   )
 }
 
-export default About
+export default About;
