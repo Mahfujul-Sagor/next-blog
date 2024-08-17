@@ -2,14 +2,10 @@ import { Typography } from "@material-tailwind/react";
 import Image from "next/image";
 import logo from '@/public/logo.svg';
 import Link from "next/link";
- 
-export function FooterWithLogo() {
-  return (
-
 function Footer() {
   return (
     <div className='border-t w-full min-h-20 px-20 max-[500px]:px-3 py-2 flex items-center gap-2 text-gray-500 bg-white max-lg:flex-col max-sm:text-xs'>
-      <div className='flex-1'><p>© 2024 NextBlog. All rights reserved</p> </div>
+      <div className='flex-1'><p>&copy; 2024 NextBlog. All rights reserved</p> </div>
       <div className='flex-1'>
         <ul className='flex gap-4 justify-center'>
           <li className='hover:text-black'>
