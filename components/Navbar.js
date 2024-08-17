@@ -39,7 +39,7 @@ function Navbar() {
                     <Image src={logo} alt='logo' priority={true} quality={100} className='max-[500px]:h-[100px] max-[500px]:w-[100px]'/>
                 </Link>
             </div>
-            <ul className="pages flex gap-8 max-lg:hidden flex-1 justify-center ">
+            <ul className="pages hidden gap-8 lg:flex flex-1 justify-center">
                 {navItems.map( (item) => (
                     <li key={item.path} className='capitalize'>
                         <Link href={item.path}>
@@ -51,7 +51,7 @@ function Navbar() {
             <div className='flex justify-end items-center gap-6 flex-1  '>
                 <div><ModeToggle/></div>
                 <Button>Sign In</Button>
-                <div className='hidden max-lg:flex' onClick={handleOpen}>
+                <div className='flex lg:hidden' onClick={handleOpen}>
                     <IoMenuOutline className='text-3xl'/>
                 </div>
             </div>
