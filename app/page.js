@@ -1,18 +1,17 @@
-import { auth } from "@/auth";
-import { checkIsAuthenticated } from "@/lib/auth/checkIsAuthenticated"
-import { redirect } from "next/navigation";
+import BrowseByCat from "@/components/BrowseByCat";
+import Featured from "@/components/Featured";
+import TopAuthors from "@/components/TopAuthors";
 
-export default async function Home() {
-  const isAuthenticated = await checkIsAuthenticated();
-  if (!isAuthenticated) {
-    redirect("/auth/sign-in");
-  }
-  const session = await auth();
+
+export default function Home() {
   return (
-    <main className="min-h-screen ">
-      <p>{session.user.email}</p>
-      <p>{session.user.name}</p>
-      home page
+    <main className="min-h-screen flex justify-center">
+      <div className="max-w-[1170px]">
+        <Featured/>
+        <hr />
+        <BrowseByCat/>
+        <TopAuthors/>
+      </div>
     </main>
   )
 }

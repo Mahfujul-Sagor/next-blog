@@ -3,12 +3,12 @@ import React from 'react'
 function PrivacyPolicy() {
   return (
     <div className='w-full min-h-screen flex flex-col items-center'>
-      <div className='pb-10 pt-20 max-w-[970px] '>
+      <div className='pb-10 pt-20 max-w-[1170px]'>
         <h1 className='text-5xl font-bold text-center'>Privacy Policy</h1>
 
         <div className='mt-10 text-gray-600 max-lg:text-sm'>
           <p className='mt-5'>
-            As discussed in the introduction post, one of the best things about Ghost is just how much you can customize to turn your site into something unique. Everything about your layout and design can be changed, so you're not stuck with yet another clone of a social just how much you cannetwork profile.
+            As discussed in the introduction post, one of the best things about Ghost is just how much you can customize to turn your site into something unique. Everything about your layout and design can be changed, so you&apos;re not stuck with yet another clone of a social just how much you cannetwork profile.
           </p>
           <p className='mt-5'>
             Sed ullamcorper dui at risus viverra, nec cursus leo ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos congue dui nec dui lobortis maximus.
@@ -31,7 +31,7 @@ function PrivacyPolicy() {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id quam at justo ullamcorper vulputate. Donec mattis aliquam urna, sed placerat dolor volutpat vel. Maecenas posuere sem purus, quis feugiat.
             </p>
             <p className='mt-5'>
-              As discussed in the introduction post, one of the best things about Ghost is just how much you can customize to turn your site into something unique. Everything about your layout and design can be changed, so you're not stuck with yet another clone of a social network profile.
+              As discussed in the introduction post, one of the best things about Ghost is just how much you can customize to turn your site into something unique. Everything about your layout and design can be changed, so you&apos;re not stuck with yet another clone of a social network profile.
             </p>
           </div>
         </div>
@@ -58,7 +58,7 @@ function PrivacyPolicy() {
               <li className='mt-5 flex gap-2'>
                 <span>3.</span>
                 <p>
-                  <span className="font-bold">Everything about yourlayout and design can be changed</span>, so you're not stuck with yet another clone of a social network profile.
+                  <span className="font-bold">Everything about yourlayout and design can be changed</span>, so you&apos;re not stuck with yet another clone of a social network profile.
                 </p>
               </li>
               <li className='mt-5 flex gap-2'>
