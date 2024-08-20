@@ -1,11 +1,28 @@
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button';
-import { categories } from '@/lib/Categories';
+import { fetchCategories } from '@/queries/Categories';
 import PostCard from './PostCard';
 
 
 
 const BrowseByCat = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const fetchedCategories = await fetchCategories();
+        console.log('Fetched categories:', fetchedCategories);
+        setCategories(fetchedCategories);
+      } catch (error) {
+        console.error('Categories fetching failed:', error);
+      }
+    };
+
+    getCategories();
+  }, []);
+
   return (
     <section className='w-full flex justify-center mt-[100px] mb-[60px]'>
       <div className='max-w-[1170px] flex flex-col items-center gap-16'>
@@ -13,13 +30,19 @@ const BrowseByCat = () => {
           <h2 className='text-3xl sm:text-4xl md:text-5xl font-bold text-center'>Browse by Category</h2>
           <p className='text-center'>Select a category to see more related content</p>
         </div>
-        <div className='flex flex-wrap gap-4 justify-center'>
-          {categories && categories.map((category)=> {
-            return (
-              <Button variant='secondary' key={category.id} className='rounded-full border text-[1rem]'>{category.title}</Button>
-            )
-          })}
-        </div>
+        <ul className='flex flex-wrap gap-4 justify-center'>
+          {Array.isArray(categories) && categories.length > 0 ? (
+            categories.map((item) => (
+              <li key={item.id}>
+                <Button variant='secondary' className='rounded-full border text-[1rem] capitalize'>
+                  {item.title}
+                </Button>
+              </li>
+            ))
+          ) : (
+            <p>No categories available</p>
+          )}
+        </ul>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10'>
           <PostCard/>
           <PostCard/>
