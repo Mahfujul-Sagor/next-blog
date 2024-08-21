@@ -7,7 +7,7 @@ import user from '@/public/user.webp'
 const PostCard = () => {
   return (
     <div className='flex flex-col gap-6 justify-center'>
-      <div className='aspect-[370/280]'>
+      <div className='aspect-[370/280] hover:scale-105 transition-transform duration-200'>
         <Image src={post1} alt='' width={400} height={400} className='min-h-full w-full rounded-lg object-cover'/>
       </div>
       <div className='flex flex-col gap-6'>
