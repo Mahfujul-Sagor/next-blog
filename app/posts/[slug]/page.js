@@ -4,6 +4,7 @@ import post2 from '@/public/post2.webp'
 import Image from 'next/image';
 import user from '@/public/user.webp'
 import { FaFacebook, FaTwitter, FaPinterest } from "react-icons/fa";
+import Socialicons from '@/components/Socialicons';
 
 
 const SinglePost = () => {
@@ -63,9 +64,7 @@ const SinglePost = () => {
           </div>
           <div className='flex gap-2 items-center'>
             <span>Share this:</span>
-            <FaFacebook className='text-2xl'/>
-            <FaTwitter className='text-2xl'/>
-            <FaPinterest className='text-2xl'/>
+            <Socialicons className='flex gap-2 items-center' iconClass='text-2xl' />
           </div>
         </div>
         <div className='flex flex-wrap xl:flex-nowrap gap-8 items-center'>
@@ -75,11 +74,7 @@ const SinglePost = () => {
           <div className='max-w-[617px] w-full flex flex-col gap-2'>
             <h2 className='font-medium text-xl xl:text-2xl'>Author: Adrio Devid</h2>
             <p>Mario, a co-founder of Acme and the content management system Sanity is an accomplished Staff Engineer with a specialization in Frontend at Vercel. Before his current position, he served as a Senior Engineer at Apple.</p>
-            <div className='flex items-center gap-4 text-2xl mt-2'>
-              <FaFacebook />
-              <FaTwitter />
-              <FaPinterest />
-            </div>
+            <Socialicons className='flex items-center gap-4 text-2xl mt-2'/>
           </div>
         </div>
       </div>

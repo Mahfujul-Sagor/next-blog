@@ -1,8 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
 import image from '@/public/post2.webp'
-import user from '@/public/user.webp'
-import { LuFileEdit } from "react-icons/lu";
 import TopAuthors from '@/components/TopAuthors';
 
 function About() {
@@ -20,10 +18,10 @@ function About() {
               <h1 className='text-4xl font-bold'>
               We provide high quality Articles & blogs
               </h1>
-              <p className='text-gray-600 mt-2 pr-8'>
+              <p className='text-gray-600 mt-2'>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium ea distinctio in quibusdam dolores officia accusamus nihil nisi, perspiciatis repellendus exercitationem ipsa voluptates officiis suscipit explicabo vero dolore provident dolor!
               </p>
-              <p className='text-gray-600 mt-2 pr-8'>
+              <p className='text-gray-600 mt-2'>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium ea distinctio in quibusdam dolores officia accusamus nihil nisi, perspiciatis repellendus exercitationem ipsa voluptates officiis suscipit explicabo vero dolore provident dolor!
               </p>
             </div>

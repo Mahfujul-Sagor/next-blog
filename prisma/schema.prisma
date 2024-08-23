@@ -33,12 +33,13 @@ model Account {
 
 model User {
   id            String    @id @default(cuid()) @map("_id")
-  name          String?
+  name          String
+  bio           String?
   email         String    @unique
   password      String
   emailVerified DateTime?
   image         String?
-  sessions       Session[]
+  sessions      Session[]
   accounts      Account[]
   Post          Post[]
   Comment       Comment[]
@@ -77,6 +78,7 @@ model Post {
   createdAt DateTime  @default(now())
   slug      String    @unique
   title     String
+  subtitle  String
   desc      String
   img       String?
   views     Int       @default(0)
