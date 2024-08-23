@@ -5,6 +5,8 @@ import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Toolbar from './Toolbar';
 import { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
+import Link from '@tiptap/extension-link';
+import Highlight from '@tiptap/extension-highlight';
 
 const Tiptap = forwardRef(({ description, onEditorContentChange }, ref) => {
   const [isClient, setIsClient] = useState(false);
@@ -14,7 +16,7 @@ const Tiptap = forwardRef(({ description, onEditorContentChange }, ref) => {
   }, []);
 
   const editor = useEditor({
-    extensions: [StarterKit.configure({ heading: { levels: [1, 2] } }), Underline],
+    extensions: [StarterKit.configure({ heading: { levels: [1, 2] } }), Underline, Link, Highlight],
     content: description || '',
     onUpdate({ editor }) {
       const description = editor.getHTML();

@@ -78,7 +78,7 @@ const WritePage = () => {
               <p className="text-red-500">{errors.description.message}</p>
             )}
           </div>
-          <Button type='submit' disabled={isSubmitting} className={`text-base md:text-xl ${isSubmitting ? 'bg-gray-500 cursor-not-allowed' : ''}`}>{isSubmitting ? 'Posting...' : 'Post'}</Button>
+          <Button type='submit' disabled={isSubmitting} className={`text-base ${isSubmitting ? 'bg-gray-500 cursor-not-allowed' : ''}`}>{isSubmitting ? 'Posting...' : 'Post'}</Button>
         </form>
     </main>
   )
