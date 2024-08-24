@@ -6,7 +6,7 @@ import TopAuthors from "@/components/TopAuthors";
 export default function Home() {
   return (
     <main className="min-h-screen flex justify-center">
-      <div className="max-w-[1170px]">
+      <div className="max-w-[1080px]">
         <Featured/>
         <hr />
         <BrowseByCat/>

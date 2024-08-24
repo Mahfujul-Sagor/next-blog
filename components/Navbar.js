@@ -34,7 +34,7 @@ function Navbar() {
   return (
     <>
         <div className='w-full flex justify-center border-b shadow sticky backdrop-blur-3xl top-0 z-999'>
-            <nav className='max-w-[1170px] px-8 xl:px-0 max-[500px]:px-3 w-full py-4 max-[500px]:py-0 flex justify-evenly items-center max-lg:justify-between'>
+            <nav className='max-w-[1080px] px-8 xl:px-0 max-[500px]:px-3 w-full py-4 max-[500px]:py-0 flex justify-evenly items-center max-lg:justify-between'>
                 <div className="logo flex-1">
                     <Link href='/'>
                         <Image src={logo} alt='logo' priority={true} quality={100} className='max-[500px]:h-[100px] max-[500px]:w-[100px]'/>
