@@ -18,12 +18,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import slugify from "slugify";
 
 const WritePage = () => {
+
+  const router = useRouter();
+
+  // for text based inputs
   const [selectedCategory, setSelectedCategory] = useState('');
   const tiptapRef = useRef(null);
-  const { toast } = useToast()
+  const { toast } = useToast();
 
+  // for image input
+  const [previewImage, setPreviewImage] = useState(null);
+
+  // zod schema
   const formSchema = z.object({
     title: z.string()
       .min(5, { message: "The title must contain at least 5 characters" })
@@ -35,6 +46,7 @@ const WritePage = () => {
       .min(5, { message: "The description must contain at least 5 character" })
       .trim(),  // No maximum limit
     category: z.string().min(1, {message: 'Please select a category'}),
+    image: z.any().optional(),
   });
 
   const {
@@ -61,15 +73,78 @@ const WritePage = () => {
     setValue('category', value);
   };
 
-  const onSubmit = (data) => {
+  // logic to preview the image
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      if (previewImage) {
+        URL.revokeObjectURL(previewImage);
+      }
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImage(imageUrl);
+      setValue('image', event.target.files);
+    } else {
+      setPreviewImage(null);
+    }
+  };
+
+  // slugify
+  const slugifyOptions = {
+    replacement: '-',
+    remove: /[*+~.()'"!:@]/g,
+    lower: true,
+    strict: true,
+  };
+
+  const createSlug = (str) => {
+    return slugify(str, slugifyOptions);
+  }
+
+  const onSubmit = async (data) => {
     try {
-      console.log("Title:", data.title);
-      console.log("Subtitle:", data.subtitle);
-      console.log("Description:", data.description);
-      console.log("Category:", data.category);
+      let imageUrl = '';
+      // image upload logic
+      if (data.image && data.image[0]) {
+        const file = data.image?.[0];
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await fetch('/api/upload-image', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('File upload failed');
+        }
+
+        const result = await response.json();
+        imageUrl = result.imageUrl;
+      }
+
+      const response = await fetch('api/posts', {
+        method: 'POST',
+        body: JSON.stringify({
+          title: data.title,
+          subtitle: data.subtitle,
+          desc: data.description,
+          img: imageUrl,
+          catSlug: data.category || 'style',
+          slug: createSlug(data.title),
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Post upload failed');
+      }
+
+      const postData = await response.json();
+      router.push(`/posts/${postData.slug}`);
 
       reset();
       setSelectedCategory('');
+      setPreviewImage(null);
       tiptapRef.current.clearContent();
 
       toast({
@@ -125,8 +200,18 @@ const WritePage = () => {
             )}
           </div>
           <div>
-            
+            <Label htmlFor='image'>Image</Label>
+            <Input type='file' ref={register('image')} onChange={handleImageChange} id='image'/>
+            {errors.image && (
+              <p className="text-red-500">{errors.image.message}</p>
+            )}
           </div>
+          {previewImage && (
+            <div className="">
+              <Label htmlFor='imagePreview'>Image Preview:</Label>
+              <Image src={previewImage} id="imagePreview" alt="Image Preview" width={500} height={500} className="object-cover max-w-full h-auto rounded-lg"/>
+            </div>
+          )}
           <div>
             <Label htmlFor="description">Description</Label>
             <Tiptap description='' ref={tiptapRef} onEditorContentChange={handleEditorContentChange} />
