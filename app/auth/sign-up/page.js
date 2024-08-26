@@ -1,32 +1,52 @@
 "use client";
 
-import GithubSigning from '@/components/GithubSigning';
-import GoogleSigning from '@/components/GoogleSigning';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import GoogleSigning from '@/components/GoogleSigning';
+import GithubSigning from '@/components/GithubSigning';
+import { checkIsAuthenticated } from '@/lib/auth/checkIsAuthenticated';
+import Loader from '@/components/Loader';
+
+// Zod schema for validation
+const schema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters long'),
+});
 
 const SignUp = () => {
   const router = useRouter();
-  const [error, setError] = useState(null);
+  const [serverError, setServerError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
+  // React Hook Form with Zod resolver
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+    resolver: zodResolver(schema),
+  });
 
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const password = formData.get('password');
-  
-    if (!name || !email || !password) {
-      setError('Please fill all the fields');
-      console.error('Please fill all the fields');
-      return;
-    }
-  
+  // Protecting route
+  useEffect(() => {
+    const checkAuth = async () => {
+      const isAuthenticated = await checkIsAuthenticated();
+      if (isAuthenticated) {
+        router.push('/');
+      } else {
+        setLoading(false); // Stop loading when check is done
+      }
+    };
+    checkAuth();
+  }, [router]);
+
+  const onSubmit = async (data) => {
+    const { name, email, password } = data;
+
     try {
       const response = await fetch('/api/register', {
         method: 'POST',
@@ -40,52 +60,78 @@ const SignUp = () => {
         router.push('/auth/sign-in');
       } else {
         const errorData = await response.json();
-        setError(errorData.message);
+        setServerError(errorData.message);
         console.error(errorData.message);
       }
     } catch (error) {
-      setError('Could not register');
+      setServerError('Could not register');
       console.error('Could not register:', error);
     }
   };
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className='w-full min-h-screen flex justify-center items-center px-4'>
-        <div className='w-[35rem] flex flex-col gap-10 items-center border rounded-xl px-14 py-16 shadow-xl max-sm:px-10 max-sm:py-12 max-sm:w-[30rem]'>
-          <div className='w-full text-center'>
-            <h1 className='text-5xl font-semibold mb-4'>Sign up</h1>
-            <p className='text-gray-500'>Sign up for your account</p>
-          </div>
-          <div className='w-full flex flex-col gap-4'>
-            <GoogleSigning text='up'/>
-            <GithubSigning text='up'/>
-          </div>
-          <div className='w-full flex justify-center items-center gap-1'>
-            <div className='flex-1 h-[1px] bg-gray-500'></div>
-            <div className='flex-1 text-gray-500 text-sm text-center'>Or with credentials</div>
-            <div className='flex-1 h-[1px] bg-gray-500'></div>
-          </div>
-          <form onSubmit={handleSubmit} className='w-full'>
-            <div className='flex flex-col gap-4 w-full'>
-              <div className='w-full'>
-                <Label htmlFor="name">Name</Label>
-                <Input type='text' id='name' name='name' placeholder='name' />
-              </div>
-              <div className='w-full'>
-                <Label htmlFor="email">Email</Label>
-                <Input type='email' id='email' name='email' placeholder='email' />
-              </div>
-              <div className='w-full'>
-                <Label htmlFor="password">Password</Label>
-                <Input type='password' id='password' name='password' placeholder='password' className='py-2' />
-              </div>
-              {error && <p className='text-red-500'>{error}</p>}
-              <Button type='submit' size='lg'>Sign up</Button>
-            </div>
-          </form>
-          <p>Already have an account? <Link href='/auth/sign-in' className='text-blue-600'>Sign in</Link></p>
+      <div className='w-[35rem] flex flex-col gap-10 items-center border rounded-xl px-14 py-16 shadow-xl max-sm:px-10 max-sm:py-12 max-sm:w-[30rem]'>
+        <div className='w-full text-center'>
+          <h1 className='text-5xl font-semibold mb-4'>Sign up</h1>
+          <p className='text-gray-500'>Sign up for your account</p>
         </div>
+        <div className='w-full flex flex-col gap-4'>
+          <GoogleSigning text='up'/>
+          <GithubSigning text='up'/>
+        </div>
+        <div className='w-full flex justify-center items-center gap-1'>
+          <div className='flex-1 h-[1px] bg-gray-500'></div>
+          <div className='flex-1 text-gray-500 text-sm text-center'>Or with credentials</div>
+          <div className='flex-1 h-[1px] bg-gray-500'></div>
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
+          <div className='flex flex-col gap-4 w-full'>
+            <div className='w-full'>
+              <Label htmlFor="name">Name</Label>
+              <Input
+                type='text'
+                id='name'
+                {...register('name')}
+                placeholder='name'
+                className={errors.name ? 'border-red-500' : ''}
+              />
+              {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
+            </div>
+            <div className='w-full'>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                type='email'
+                id='email'
+                {...register('email')}
+                placeholder='email'
+                className={errors.email ? 'border-red-500' : ''}
+              />
+              {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
+            </div>
+            <div className='w-full'>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                type='password'
+                id='password'
+                {...register('password')}
+                placeholder='password'
+                className={errors.password ? 'border-red-500' : ''}
+              />
+              {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
+            </div>
+            {serverError && <p className='text-red-500'>{serverError}</p>}
+            <Button type='submit' className={`${isSubmitting ? 'cursor-not-allowed' : ''}`} size='lg'>{isSubmitting ? 'Signing up...' : 'Sign up'}</Button>
+          </div>
+        </form>
+        <p>Already have an account? <Link href='/auth/sign-in' className='text-blue-600'>Sign in</Link></p>
       </div>
-  )
+    </div>
+  );
 }
 
 export default SignUp;

@@ -7,9 +7,9 @@ function About() {
 
   return (
     <div className='min-h-screen flex justify-center'>
-      <div className='max-w-[1080px]'>
+      <div className='max-w-[1170px]'>
         <div className='w-full flex justify-center items-center'>
-          <div className='w-full mt-10 py-10 flex items-center gap-8 max-lg:flex-col max-w-[1080px]'>
+          <div className='w-full mt-10 py-10 flex items-center gap-8 max-lg:flex-col max-w-[1170px]'>
             <div className='flex-1'>
               <Image src={image} alt='image' className='rounded-lg'/>
             </div>

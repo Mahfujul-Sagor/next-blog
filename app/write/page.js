@@ -7,7 +7,7 @@ import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import Tiptap from '@/components/Tiptap';
 import { Label } from "@/components/ui/label";
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import {
   Select,
@@ -21,33 +21,31 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import slugify from "slugify";
+import { useSession } from "next-auth/react";
+import Loader from "@/components/Loader";
+
+// zod schema
+const formSchema = z.object({
+  title: z.string()
+    .min(5, { message: "The title must contain at least 5 characters" })
+    .max(350, { message: "The title must be under 350 characters" }),
+  subtitle: z.string()
+    .min(5, { message: "The subtitle must contain at least 5 characters" }),
+  description: z.string()
+    .min(5, { message: "The description must contain at least 5 character" })
+    .trim(),  // No maximum limit
+  category: z.string().min(1, {message: 'Please select a category'}),
+  image: z.any().optional(),
+});
 
 const WritePage = () => {
-
+  const { data: session, status } = useSession();
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-
-  // for text based inputs
-  const [selectedCategory, setSelectedCategory] = useState('');
   const tiptapRef = useRef(null);
   const { toast } = useToast();
-
-  // for image input
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [previewImage, setPreviewImage] = useState(null);
-
-  // zod schema
-  const formSchema = z.object({
-    title: z.string()
-      .min(5, { message: "The title must contain at least 5 characters" })
-      .max(250, { message: "The title must be under 250 characters" }),
-    subtitle: z.string()
-      .min(5, { message: "The subtitle must contain at least 5 characters" })
-      .max(250, { message: "The subtitle must be under 250 characters" }),
-    description: z.string()
-      .min(5, { message: "The description must contain at least 5 character" })
-      .trim(),  // No maximum limit
-    category: z.string().min(1, {message: 'Please select a category'}),
-    image: z.any().optional(),
-  });
 
   const {
     register,
@@ -63,6 +61,26 @@ const WritePage = () => {
       description: '',
     },
   });
+
+  useEffect(() => {
+    console.log('Session:', session);
+    console.log('Status:', status);
+
+    if (status === 'loading') {
+      setIsLoading(true);
+      return;
+    }
+    setIsLoading(false);
+
+    if (status === 'authenticated' && session && session.user) {
+    } else {
+      router.push('/auth/sign-in');
+    }
+  }, [session, status, router]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   const handleEditorContentChange = (description) => {
     setValue('description', description);
@@ -162,7 +180,8 @@ const WritePage = () => {
   };
 
   return (
-    <main className='w-full max-w-[1080px] mx-auto mt-[100px] mb-[60px]'>
+    <main className='w-full max-w-[1170px] mx-auto my-[60px]'>
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8">Write Post</h1>
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5'>
           <div>
             <Label htmlFor="title">Title</Label>

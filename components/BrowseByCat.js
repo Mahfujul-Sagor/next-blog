@@ -13,7 +13,6 @@ const BrowseByCat = () => {
     const getCategories = async () => {
       try {
         const fetchedCategories = await fetchCategories();
-        console.log('Fetched categories:', fetchedCategories);
         setCategories(fetchedCategories);
       } catch (error) {
         console.error('Categories fetching failed:', error);

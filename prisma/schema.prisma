@@ -34,7 +34,7 @@ model User {
   name          String
   bio           String?
   email         String    @unique
-  password      String
+  password      String?
   emailVerified DateTime?
   image         String?
   sessions      Session[]
