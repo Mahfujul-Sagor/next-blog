@@ -2,11 +2,9 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button';
 import { fetchCategories } from '@/queries/Categories';
-import PostCard from './PostCard';
-
-
 
 const BrowseByCat = () => {
+
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -42,18 +40,6 @@ const BrowseByCat = () => {
             <p>No categories available</p>
           )}
         </ul>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10'>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-        </div>
-        <Button>Browse all Posts</Button>
       </div>
     </section>
   )

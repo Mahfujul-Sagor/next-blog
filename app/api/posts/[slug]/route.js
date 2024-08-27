@@ -1,18 +1,8 @@
-import { auth } from "@/auth";
 import prisma from "@/db/connect";
 import { NextResponse } from "next/server";
 
 
 export const GET = async (request, {params}) => {
-
-  const session = await auth();
-
-  if (!session) {
-    return NextResponse.json(
-      {message: "Not Authenticated"},
-      {status: 401}
-    );
-  }
 
   const { slug } = params;
 

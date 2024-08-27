@@ -56,8 +56,8 @@ function Navbar() {
 
   return (
     <>
-      <div className="w-full flex justify-center border-b shadow sticky backdrop-blur-2xl bg-background/80 top-0 z-999">
-        <nav className="max-w-[1170px] px-8 xl:px-0 max-[500px]:px-3 w-full py-4 max-[500px]:py-0 flex justify-evenly items-center max-lg:justify-between">
+      <div className="w-full flex justify-center border-b shadow sticky left-0 bg-background top-0 z-9999">
+        <nav className="bg-background max-w-[1170px] px-8 xl:px-0 max-[500px]:px-3 w-full py-4 max-[500px]:py-0 flex justify-evenly items-center max-lg:justify-between">
           <div className="logo flex-1">
             <Link href="/">
               <Image
@@ -81,11 +81,11 @@ function Navbar() {
               <ModeToggle />
             </div>
             {session ? (
-              <Button onClick={handleSignOutClick} disabled={isLoading}>
+              <Button onClick={handleSignOutClick} className='max-lg:hidden' disabled={isLoading}>
                 {isLoading ? "Signing Out..." : "Sign Out"}
               </Button>
             ) : (
-              <Button onClick={() => router.push("/auth/sign-in")}>
+              <Button className='max-lg:hidden' onClick={() => router.push("/auth/sign-in")}>
                 Sign In
               </Button>
             )}

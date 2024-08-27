@@ -6,7 +6,7 @@ import user from '@/public/user.webp'
 
 const TopAuthors = () => {
   return (
-    <div>
+    <div className='w-full max-w-[1170px]'>
       <div className='mt-10'>
         <h1 className='text-3xl font-semibold mb-6'>Top Authors</h1>
         <hr/>

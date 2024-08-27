@@ -17,7 +17,7 @@ const getauthor = async (id) => {
     return data;
   } catch (error) {
     console.error('Error fetching author:', error);
-    throw new Error('Author fetching failed');
+    return null;
   }
 }
 
@@ -34,7 +34,7 @@ const SingleAuthor = async ({params}) => {
   const author = await getauthor(id);
 
   if (!author) {
-    return <div>No author found</div>;
+    return <div className='min-h-screen'>No author found</div>;
   }
 
   return (
