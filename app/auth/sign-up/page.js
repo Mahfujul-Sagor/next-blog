@@ -14,7 +14,7 @@ import GithubSigning from '@/components/GithubSigning';
 import { checkIsAuthenticated } from '@/lib/auth/checkIsAuthenticated';
 import Loader from '@/components/Loader';
 
-// Zod schema for validation
+// Zod schema for form validation
 const schema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.string().email('Invalid email address'),
@@ -26,24 +26,25 @@ const SignUp = () => {
   const [serverError, setServerError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // React Hook Form with Zod resolver
+  // Initialize React Hook Form with Zod validation
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: zodResolver(schema),
   });
 
-  // Protecting route
+  // Check authentication status on component mount
   useEffect(() => {
     const checkAuth = async () => {
       const isAuthenticated = await checkIsAuthenticated();
       if (isAuthenticated) {
         router.push('/');
       } else {
-        setLoading(false); // Stop loading when check is done
+        setLoading(false); // Stop loading when authentication check completes
       }
     };
     checkAuth();
   }, [router]);
 
+  // Handle form submission
   const onSubmit = async (data) => {
     const { name, email, password } = data;
 
@@ -70,7 +71,7 @@ const SignUp = () => {
   };
 
   if (loading) {
-    return <Loader />;
+    return <Loader />; // Show loader while checking authentication
   }
 
   return (
@@ -97,7 +98,7 @@ const SignUp = () => {
                 type='text'
                 id='name'
                 {...register('name')}
-                placeholder='name'
+                placeholder='Name'
                 className={errors.name ? 'border-red-500' : ''}
               />
               {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
@@ -108,7 +109,7 @@ const SignUp = () => {
                 type='email'
                 id='email'
                 {...register('email')}
-                placeholder='email'
+                placeholder='Email'
                 className={errors.email ? 'border-red-500' : ''}
               />
               {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
@@ -119,7 +120,7 @@ const SignUp = () => {
                 type='password'
                 id='password'
                 {...register('password')}
-                placeholder='password'
+                placeholder='Password'
                 className={errors.password ? 'border-red-500' : ''}
               />
               {errors.password && <p className='text-red-500'>{errors.password.message}</p>}

@@ -2,7 +2,6 @@ import BrowseByCat from "@/components/BrowseByCat";
 import Featured from "@/components/Featured";
 import PostCardList from "@/components/PostCardList";
 import TopAuthors from "@/components/TopAuthors";
-import { Button } from "@/components/ui/button";
 
 
 export default function Home({searchParams}) {

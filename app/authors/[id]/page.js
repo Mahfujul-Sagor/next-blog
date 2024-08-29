@@ -1,10 +1,12 @@
 import Image from 'next/image';
-import React from 'react'
-import noavatar from '@/public/no-avatar.png';
+import React from 'react';
+import noavatar from '@/public/no-avatar.png'; // Placeholder image for authors without a profile picture
 import PostCard from '@/components/PostCard';
-import { checkIsAuthenticated } from '@/lib/auth/checkIsAuthenticated';
-import { redirect } from 'next/navigation';
+import { checkIsAuthenticated } from '@/lib/auth/checkIsAuthenticated'; // Function to verify if the user is authenticated
+import { redirect } from 'next/navigation'; // Redirect function from Next.js
+import PostCardList from '@/components/PostCardList'; // Component to display a list of posts
 
+// Function to fetch author details based on ID
 const getauthor = async (id) => {
   try {
     const response = await fetch(`${process.env.BASE_URL}/api/authors/${id}` || `http://localhost:3000/api/authors/${id}`);
@@ -14,31 +16,33 @@ const getauthor = async (id) => {
     }
 
     const data = await response.json();
-    return data;
+    return data; // Return the fetched author data
   } catch (error) {
-    console.error('Error fetching author:', error);
-    return null;
+    console.error('Error fetching author:', error); // Log error if fetching fails
+    return null; // Return null if there's an error
   }
 }
 
-const SingleAuthor = async ({params}) => {
+// Main component to display a single author's page
+const SingleAuthor = async ({ params, searchParams }) => {
 
-  const isAuthenticated = await checkIsAuthenticated();
+  const isAuthenticated = await checkIsAuthenticated(); // Check if user is authenticated
 
   if (!isAuthenticated) {
-    redirect('/auth/sign-in');
+    redirect('/auth/sign-in'); // Redirect to sign-in if not authenticated
   }
 
-  const {id} = params;
+  const { id } = params; // Get author ID from URL parameters
+  const page = parseInt(searchParams.page) || 1; // Get current page number from URL or default to 1
 
-  const author = await getauthor(id);
+  const author = await getauthor(id); // Fetch author details
 
   if (!author) {
-    return <div className='min-h-screen'>No author found</div>;
+    return <div className='min-h-screen text-center'>No author found</div>; // Show message if no author is found
   }
 
   return (
-    <div>
+    <div className='min-h-screen'>
       <div className='w-full max-w-[1170px] mx-auto flex flex-col gap-16 my-[60px]'>
         {author && (
           <div className='flex flex-col items-center gap-10 text-center'>
@@ -57,20 +61,10 @@ const SingleAuthor = async ({params}) => {
             </div>
           </div>
         )}
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10'>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-        </div>
+        <PostCardList page={page} authorId={id} /> {/* Display list of posts by the author */}
       </div>
     </div>
-  )
+  );
 }
 
 export default SingleAuthor;
