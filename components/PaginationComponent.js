@@ -21,7 +21,8 @@ const PaginationComponent = ({ page, hasPrev, hasNext }) => {
         {/* Previous Button */}
         <PaginationItem>
           <PaginationPrevious 
-            disabled={!hasPrev} 
+            disabled={!hasPrev}
+            className='cursor-pointer'
             onClick={() => hasPrev && router.push(`?page=${page - 1}`)}
           >
             Previous
@@ -71,6 +72,7 @@ const PaginationComponent = ({ page, hasPrev, hasNext }) => {
         <PaginationItem>
           <PaginationNext 
             disabled={!hasNext} 
+            className='cursor-pointer'
             onClick={() => hasNext && router.push(`?page=${page + 1}`)}
           >
             Next

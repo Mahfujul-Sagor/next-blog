@@ -6,9 +6,9 @@ import { NextResponse } from "next/server";
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
 
-  const page = parseInt(searchParams.get("page")) ?? 1; // Current page number
-  const cat = searchParams.get("cat") ?? undefined; // Optional category filter
-  const authorId = searchParams.get("authorId") ?? undefined; // Optional author filter
+  const page = parseInt(searchParams.get("page")) || 1; // Default to 1 if not provided
+  const cat = searchParams.get("cat") || ""; // Default to empty string if not provided
+  const authorId = searchParams.get("authorId") || undefined; // Optional filter
 
   const POST_PER_PAGE = 9; // Number of posts per page
 

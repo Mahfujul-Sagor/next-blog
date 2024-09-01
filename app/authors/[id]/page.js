@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
 import noavatar from '@/public/no-avatar.png'; // Placeholder image for authors without a profile picture
-import PostCard from '@/components/PostCard';
 import { checkIsAuthenticated } from '@/lib/auth/checkIsAuthenticated'; // Function to verify if the user is authenticated
 import { redirect } from 'next/navigation'; // Redirect function from Next.js
 import PostCardList from '@/components/PostCardList'; // Component to display a list of posts
@@ -43,16 +42,16 @@ const SingleAuthor = async ({ params, searchParams }) => {
 
   return (
     <div className='min-h-screen'>
-      <div className='w-full max-w-[1170px] mx-auto flex flex-col gap-16 my-[60px]'>
+      <div className='w-full max-w-[1170px] mx-auto flex flex-col gap-10 my-[60px]'>
         {author && (
           <div className='flex flex-col items-center gap-10 text-center'>
             {author.image ? (
               <div className='flex p-6 rounded-full border'>
-                <Image src={author.image} alt='Author Image' width={100} height={100} className='rounded-full object-cover'/>
+                <Image src={author.image} alt='Author Image' width={100} height={100} priority={true}  className='rounded-full object-cover'/>
               </div>
             ) : (
               <div className='flex p-6 rounded-full border'>
-                <Image src={noavatar} alt='Author Image' width={100} height={100} className='rounded-full object-cover'/>
+                <Image src={noavatar} alt='Author Image' width={100} height={100} priority={true} className='rounded-full object-cover'/>
               </div>
             )}
             <div className='w-full max-w-[770px]'>
@@ -61,6 +60,7 @@ const SingleAuthor = async ({ params, searchParams }) => {
             </div>
           </div>
         )}
+        <hr />
         <PostCardList page={page} authorId={id} /> {/* Display list of posts by the author */}
       </div>
     </div>

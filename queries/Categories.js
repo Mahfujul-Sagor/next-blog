@@ -9,7 +9,7 @@ export const fetchCategories = async () => {
 
   try {
     // Fetching the categories from the API
-    const response = await fetch(url);
+    const response = await fetch(url, {cache: 'force-cache'});
 
     // Check if the response is not okay, throw an error
     if (!response.ok) {
