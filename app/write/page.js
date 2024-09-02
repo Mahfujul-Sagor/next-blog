@@ -1,5 +1,4 @@
 // WritePage component for creating a blog post with form validation, image upload, and content preview
-
 "use client";
 
 import { Button } from "@/components/ui/button";

@@ -1,18 +1,55 @@
+"use client";
+
 import Image from 'next/image';
-import React from 'react';
 import noavatar from '@/public/no-avatar.png';
 import Link from 'next/link';
+import PostMenu from './PostMenu';
+import { useRouter } from 'next/navigation';
+import { useToast } from './ui/use-toast';
 
 const PostCard = ({ item }) => {
+  const router = useRouter();
+  const { toast } = useToast();
 
   if (!item) {
     return null;
   }
 
+  const handleEdit = () => {
+    // Logic for handling edit action
+    console.log('Edit post:', item.id);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${process.env.BASE_URL}/api/delete-post/${item.id}` || `http://localhost:3000/api/delete-post/${item.id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        router.refresh(); // Refresh page after successfully deletion
+        toast({
+          title: "Success",
+          description: "Your post was deleted successfully!",
+          className: 'bg-background text-foreground',
+        });
+      }else {
+        console.error('Failed to delete post');
+      }
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete post. Please try again later.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
-    <div className='flex flex-col gap-6 h-[556px] justify-center rounded-lg'>
+    <div className='flex flex-col gap-6 h-[556px] justify-center rounded-lg relative'>
       {item.img && (
-        <div className='aspect-[370/280] overflow-hidden rounded-lg'>
+        <div className='aspect-[370/280] overflow-hidden rounded-lg relative'>
           <Link href={`/posts/${item.slug}`}>
             <Image
               src={item.img}
@@ -23,6 +60,9 @@ const PostCard = ({ item }) => {
               className='min-h-full w-full rounded-lg object-cover'
             />
           </Link>
+          <div className="absolute top-2 right-2">
+            <PostMenu onEdit={handleEdit} onDelete={handleDelete} />
+          </div>
         </div>
       )}
       <div className='flex flex-col gap-6 flex-grow'>
