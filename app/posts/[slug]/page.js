@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import { checkIsAuthenticated } from "@/lib/auth/checkIsAuthenticated";
 import Link from "next/link";
 import SinglePostSkeleton from "@/components/Skeletons/SinglePostSkeleton";
+import PostMenu from "@/components/PostMenu";
 
 // Function to fetch a single post by its slug
 const getPost = async (slug) => {
@@ -46,7 +47,8 @@ const SinglePost = async ({ params }) => {
         <div className="py-[70px] flex flex-col xl:flex-row justify-center gap-7">
           <div className="post w-full xl:max-w-[770px] flex flex-col gap-12">
             {post?.img && (
-              <div className="rounded-lg">
+              <div className="rounded-lg relative">
+                {/* Display post image */}
                 <Image
                   src={post.img}
                   priority={true}
@@ -55,13 +57,15 @@ const SinglePost = async ({ params }) => {
                   height={400}
                   className="min-h-full w-full object-cover rounded-lg"
                 />{" "}
-                {/* Display post image */}
+                <div className="absolute top-4 right-4">
+                  <PostMenu id={post.id} />
+                </div>
               </div>
             )}
+            {/* Post title */}
             <h1 className="text-2xl sm:text-4xl lg:text-[42px] font-bold">
               {post?.title}
             </h1>{" "}
-            {/* Post title */}
             {post?.user && (
               <div className="flex flex-wrap gap-2 items-center sm:gap-4">
                 <div className="text-gray-500 flex flex-wrap gap-2 sm:gap-4 items-center">

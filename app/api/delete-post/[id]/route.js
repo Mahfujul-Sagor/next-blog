@@ -13,18 +13,17 @@ export const DELETE = async (request, {params}) => {
       },
     });
 
-    // Check if the post was deleted (this step is technically optional)
-    if (!deletedPost) {
-      return NextResponse.json(
-        { message: 'Post not found!' },
-        { status: 404 }
-      );
-    }
-
     // Return the formatted post with a 200 status
     return NextResponse.json({ message: 'Post deleted successfully' }, {status: 200});
   } catch (error) {
     console.error('Error deleting post:', error); // Log any errors during the update process
+      // Handle the specific case where the post doesn't exist
+    if (error.code === 'P2025') { // Prisma error code for "Record not found"
+      return NextResponse.json(
+        { message: 'Post not found!' },
+        { status: 404 }
+      );
+    }  
     return NextResponse.json({message: 'Error deleting post'}, {status: 500});
   }
 };
