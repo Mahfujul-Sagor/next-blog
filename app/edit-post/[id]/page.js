@@ -1,4 +1,3 @@
-// WritePage component for creating a blog post with form validation, image upload, and content preview
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -21,9 +20,9 @@ import {
 } from "@/components/ui/select";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import slugify from "slugify";
 import { useSession } from "next-auth/react";
 import Loader from "@/components/Loader";
+import { GetPostById, UpdatePost } from "@/queries/Posts";
 import { UploadImage } from "@/queries/Image";
 
 // Zod schema for form validation
@@ -40,7 +39,8 @@ const formSchema = z.object({
   image: z.any().optional(),
 });
 
-const WritePage = () => {
+const EditPost = ({ params }) => {
+  const { id } = params;
   const { data: session, status } = useSession();
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
@@ -48,6 +48,7 @@ const WritePage = () => {
   const { toast } = useToast();
   const [selectedCategory, setSelectedCategory] = useState('');
   const [previewImage, setPreviewImage] = useState(null);
+  const [previewDescription, setPreviewDescription] = useState('');
 
   const {
     register,
@@ -64,43 +65,61 @@ const WritePage = () => {
     },
   });
 
-  // Check session status to redirect if not authenticated
+  // Fetch post data by ID and set form values
   useEffect(() => {
-    if (status === 'loading') {
-      setIsLoading(true);
-      return;
-    }
-    setIsLoading(false);
+    const fetchPost = async () => {
+      try {
+        const getResponse = await GetPostById(id);
+        if (!getResponse.ok) {
+          throw new Error('Failed to fetch post');
+        }
+        const data = getResponse.data;
+        
+        // Set form values with fetched post data
+        reset({
+          title: data.title,
+          subtitle: data.subtitle,
+          description: data.desc,
+          category: data.catSlug,
+        });
+        setSelectedCategory(data.catSlug);
+        setPreviewImage(data.img || null);
+        setPreviewDescription(data.desc || '');
+      } catch (error) {
+        console.error(error);
+        toast({
+          title: "Error",
+          description: "Failed to load post data.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    if (status === 'authenticated' && session && session.user) {
-      // User is authenticated
-    } else {
+    if (status === 'authenticated') {
+      fetchPost();
+    } else if (status === 'unauthenticated') {
       router.push('/auth/sign-in');
     }
-  }, [session, status, router]);
+  }, [id, status, router, reset, toast]);
 
   if (isLoading) {
-    return <Loader />;  // Show loader while checking session
+    return <Loader />;  // Show loader while fetching data
   }
 
-  // Handle content change in Tiptap editor
   const handleEditorContentChange = (description) => {
     setValue('description', description);
   };
 
-  // Handle category selection
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
     setValue('category', value);
   };
 
-  // Logic to preview the image
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      if (previewImage) {
-        URL.revokeObjectURL(previewImage);  // Revoke previous image URL
-      }
       const imageUrl = URL.createObjectURL(file);
       setPreviewImage(imageUrl);
       setValue('image', event.target.files);
@@ -109,28 +128,12 @@ const WritePage = () => {
     }
   };
 
-  // Slugify options
-  const slugifyOptions = {
-    replacement: '-',
-    remove: /[*+~.()'"!:@]/g,
-    lower: true,
-    strict: true,
-  };
-
-  // Function to create slug from title
-  const createSlug = (str) => {
-    return slugify(str, slugifyOptions);
-  };
-
-  // Form submit handler
   const onSubmit = async (data) => {
     try {
-      let imageUrl = '';
+      let imageUrl = previewImage;
 
-      // Image upload logic
       if (data.image && data.image[0]) {
-        const file = data.image?.[0];
-
+        const file = data.image[0];
         const formData = new FormData();
         formData.append("file", file);
 
@@ -143,44 +146,37 @@ const WritePage = () => {
         const result = await response.json();
         imageUrl = result.imageUrl;
       }
+      // Update the post
+      const updateResponse = await UpdatePost(id, data, imageUrl);
 
-      // Create new post
-      const response = await fetch('api/posts', {
-        method: 'POST',
-        body: JSON.stringify({
-          title: data.title,
-          subtitle: data.subtitle,
-          desc: data.description,
-          img: imageUrl,
-          catSlug: data.category || 'style',
-          slug: createSlug(data.title),
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Post upload failed');
+      if (!updateResponse.ok) {
+        throw new Error('Post update failed');
       }
 
-      const postData = await response.json();
-      router.push(`/posts/${postData.slug}`);
+      const slug = updateResponse.slug;
 
-      // Reset form and clear state
+      if (slug) {
+        router.push(`/posts/${slug}`);
+      } else {
+        throw new Error('Post slug is undefined');
+      }
+
       reset();
       setSelectedCategory('');
       setPreviewImage(null);
+      setPreviewDescription('');
       tiptapRef.current.clearContent();
 
-      // Success toast notification
       toast({
         title: "Success",
-        description: "Your post was submitted successfully!",
+        description: "Your post was updated successfully!",
         className: 'bg-background text-foreground',
       });
     } catch (error) {
-      // Error toast notification
+      console.error(error);
       toast({
         title: "Submission Failed",
-        description: "Failed to submit the post. Please try again.",
+        description: "Failed to update the post. Please try again.",
         variant: "destructive",
       });
     }
@@ -188,7 +184,7 @@ const WritePage = () => {
 
   return (
     <main className='w-full max-w-[1170px] mx-auto my-[60px]'>
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8">Write Post</h1>
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8">Edit Post</h1>
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5'>
         <div>
           <Label htmlFor="title">Title</Label>
@@ -240,15 +236,15 @@ const WritePage = () => {
         )}
         <div>
           <Label htmlFor="description">Description</Label>
-          <Tiptap description='' ref={tiptapRef} onEditorContentChange={handleEditorContentChange} />
+          <Tiptap description={previewDescription} ref={tiptapRef} onEditorContentChange={handleEditorContentChange} />
           {errors.description && (
             <p className="text-red-500">{errors.description.message}</p>
           )}
         </div>
-        <Button type='submit' disabled={isSubmitting} className={`text-base ${isSubmitting ? 'bg-gray-500 cursor-not-allowed' : ''}`}>{isSubmitting ? 'Posting...' : 'Post'}</Button>
+        <Button type='submit' disabled={isSubmitting} className={`text-base ${isSubmitting ? 'bg-gray-500 cursor-not-allowed' : ''}`}>{isSubmitting ? 'Updating...' : 'Update'}</Button>
       </form>
     </main>
   );
 }
 
-export default WritePage;
+export default EditPost;

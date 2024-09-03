@@ -14,8 +14,7 @@ import PostMenu from "@/components/PostMenu";
 // Function to fetch a single post by its slug
 const getPost = async (slug) => {
   try {
-    const response = await fetch(
-      `${process.env.BASE_URL}/api/posts/${slug}` || `http://localhost:3000/api/posts/${slug}`);
+    const response = await fetch(`${process.env.BASE_URL}/api/posts/${slug}` || `http://localhost:3000/api/posts/${slug}`);
     if (!response.ok) {
       throw new Error("Failed to fetch post"); // Handle error if post fetching fails
     }
@@ -105,6 +104,9 @@ const SinglePost = async ({ params }) => {
                 </div>
               </div>
             )}
+            <div className="w-full">
+              <p>{post?.subtitle}</p>
+            </div>
             <div className="post-desc flex gap-6 flex-col">
               {post.desc ? parse(post.desc) : "Description is not available"}{" "}
               {/* Parse and display post description */}

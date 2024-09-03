@@ -25,8 +25,7 @@ const PostMenu = ({ id }) => {
   };
 
   const handleEdit = () => {
-    // Logic for handling edit action
-    console.log("Edit post:", id);
+    router.push(`/edit-post/${id}`);
   };
 
   const handleDelete = async (id)=> {

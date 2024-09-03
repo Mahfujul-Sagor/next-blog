@@ -34,3 +34,5 @@ export const GET = async (req, { params }) => {
     );
   }
 };
+
+// POST endpoint to create a new author using Prisma
