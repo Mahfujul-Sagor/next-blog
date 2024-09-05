@@ -10,7 +10,7 @@ import { Button } from "./ui/button";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { GiDungeonLight } from "react-icons/gi";
-import { Search } from "./Search";
+import Search from "./Search";
 
 function Navbar() {
   const { data: session } = useSession();
@@ -79,7 +79,7 @@ function Navbar() {
           </ul>
           <div className="flex justify-end items-center gap-6 flex-1  ">
             <div>
-              <CiSearch className="text-3xl" onClick={searchOpen} />
+              <CiSearch className="text-3xl" onClick={handleSearchOpen} />
             </div>
             <div>
               <ModeToggle />
@@ -100,7 +100,13 @@ function Navbar() {
         </nav>
       </div>
       {open && <Sidebar />}
-      {searchOpen && <Search />}
+      {searchOpen && (
+        <div className='fixed inset-0 flex justify-center items-center z-[9999] px-4 py-5'>
+          <div onClick={handleSearchOpen} className='w-full min-h-screen backdrop-blur-sm bg-background/25 fixed inset-0 flex justify-center items-center'>
+            <Search/>
+          </div>
+        </div>
+      )}
     </>
   );
 }

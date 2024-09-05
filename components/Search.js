@@ -1,13 +1,12 @@
-import React from 'react'
+"use client";
+
+import React, { useState } from 'react'
 
 const Search = () => {
+
   return (
-    <div className='fixed inset-0 flex justify-center items-center z-[9999] px-4 py-5'>
-      <div className='w-full min-h-screen backdrop-blur-sm bg-background/25 fixed inset-0'>
-        <div className='h-[90vh] max-w-[770px]'>
-          Search
-        </div>
-      </div>
+    <div className='border rounded-lg h-[90vh] max-w-[770px] w-full bg-background text-foreground'>
+      Search
     </div>
   )
 }
