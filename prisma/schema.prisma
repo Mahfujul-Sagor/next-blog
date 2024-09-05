@@ -78,7 +78,7 @@ model Post {
   title     String
   subtitle  String
   desc      String
-  img       String?
+  img       String
   views     Int       @default(0)
   catSlug   String
   cat       Category  @relation(fields: [catSlug], references: [slug])

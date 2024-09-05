@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { IoMenuOutline } from "react-icons/io5";
+import { LuAlignRight } from "react-icons/lu";
+import { CiSearch } from "react-icons/ci";
 import Sidebar from "./Sidebar";
-import Image from "next/image";
-import logo from "@/public/logo.svg";
 import { ModeToggle } from "./ModeToggle";
 import { Button } from "./ui/button";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { GiDungeonLight } from "react-icons/gi";
 
 function Navbar() {
   const { data: session } = useSession();
@@ -57,16 +57,10 @@ function Navbar() {
   return (
     <>
       <div className="w-full flex justify-center border-b shadow sticky left-0 bg-background top-0 z-[9999]">
-        <nav className="bg-background max-w-[1170px] px-8 xl:px-0 max-[500px]:px-3 w-full py-4 max-[500px]:py-0 flex justify-evenly items-center max-lg:justify-between">
+        <nav className="bg-background max-w-[1170px] px-8 xl:px-0 max-[500px]:px-3 w-full py-2 flex justify-evenly items-center max-lg:justify-between">
           <div className="logo flex-1">
-            <Link href="/">
-              <Image
-                src={logo}
-                alt="logo"
-                priority={true}
-                quality={100}
-                className="max-[500px]:h-[100px] max-[500px]:w-[100px]"
-              />
+            <Link href="/" className="font-bold text-xl sm:text-2xl">
+              <GiDungeonLight className="text-3xl" />Next Blog
             </Link>
           </div>
           <ul className="pages hidden gap-8 lg:flex flex-1 justify-center">
@@ -78,10 +72,13 @@ function Navbar() {
           </ul>
           <div className="flex justify-end items-center gap-6 flex-1  ">
             <div>
+              <CiSearch className="text-3xl" />
+            </div>
+            <div>
               <ModeToggle />
             </div>
             {session ? (
-              <Button onClick={handleSignOutClick} className='max-lg:hidden' disabled={isLoading}>
+              <Button variant='destructive' onClick={handleSignOutClick} className='max-lg:hidden' disabled={isLoading}>
                 {isLoading ? "Signing Out..." : "Sign Out"}
               </Button>
             ) : (
@@ -90,7 +87,7 @@ function Navbar() {
               </Button>
             )}
             <div className="flex lg:hidden" onClick={handleOpen}>
-              <IoMenuOutline className="text-3xl" />
+            <LuAlignRight className="text-3xl" />
             </div>
           </div>
         </nav>

@@ -15,7 +15,7 @@ export default function Home({searchParams}) {
 
   const handleCatChange = (category)=> {
     setCat(category);
-    router.push('/');
+    router.refresh();
   };
 
   return (

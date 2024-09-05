@@ -37,7 +37,7 @@ const formSchema = z.object({
     .min(5, { message: "The description must contain at least 5 characters" })
     .trim(),  // No maximum limit
   category: z.string().min(1, { message: 'Please select a category' }),
-  image: z.any().optional(),
+  image: z.any(),
 });
 
 const WritePage = () => {

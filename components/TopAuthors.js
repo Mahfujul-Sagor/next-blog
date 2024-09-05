@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react'
 import { LuFileEdit } from 'react-icons/lu';
-import user from '@/public/user.webp'
+import noavatar from '@/public/no-avatar.png'
 
 
 const TopAuthors = () => {
@@ -14,7 +14,7 @@ const TopAuthors = () => {
       <div className="authors w-full my-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
         <div className='p-5 max-sm:p-3 flex items-center gap-8 max-sm:gap-4 rounded-3xl border border-gray-3 max-sm:flex-col'>
           <div>
-            <Image src={user} width={100} height={100} alt='author' className='rounded-full' />
+            <Image src={noavatar} width={100} height={100} alt='author' className='rounded-full' />
           </div>
           <div>
             <h2 className='text-2xl font-semibold max-sm:text-sm'>Author Name</h2>
@@ -28,7 +28,7 @@ const TopAuthors = () => {
     
         <div className='p-5 max-sm:p-3 flex items-center gap-8 max-sm:gap-4 rounded-3xl border border-gray-3 max-sm:flex-col'>
           <div>
-            <Image src={user} width={100} height={100} alt='author' className='rounded-full' />
+            <Image src={noavatar} width={100} height={100} alt='author' className='rounded-full' />
           </div>
           <div>
             <h2 className='text-2xl font-semibold max-sm:text-sm'>Author Name</h2>
@@ -41,7 +41,7 @@ const TopAuthors = () => {
         </div>
         <div className='p-5 max-sm:p-3 flex items-center gap-8 max-sm:gap-4 rounded-3xl border border-gray-3 max-sm:flex-col'>
           <div>
-            <Image src={user} width={100} height={100} alt='author' className='rounded-full' />
+            <Image src={noavatar} width={100} height={100} alt='author' className='rounded-full' />
           </div>
           <div>
             <h2 className='text-2xl font-semibold max-sm:text-sm'>Author Name</h2>

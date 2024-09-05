@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from "next/image";
 import image from '@/public/post3.webp'
-import user from '@/public/user.webp'
+import noavatar from '@/public/no-avatar.png'
 
 const Featured = () => {
   return (
@@ -21,7 +21,7 @@ const Featured = () => {
               </div>
               <div className="text-gray-500 flex gap-4">
                 <div className="">
-                  <Image src={user} alt="" width={30} height={30} className="rounded-full object-cover"/>
+                  <Image src={noavatar} alt="" width={30} height={30} className="rounded-full object-cover"/>
                 </div>
                 <div>
                   <span className="text-sm sm:text-base">Ryna Kenter</span>
@@ -49,7 +49,7 @@ const Featured = () => {
               </div>
               <div className="text-gray-500 flex gap-4">
                 <div className="">
-                  <Image src={user} alt="" width={25} height={25} className="rounded-full object-cover"/>
+                  <Image src={noavatar} alt="" width={25} height={25} className="rounded-full object-cover"/>
                 </div>
                 <div>
                   <span className="text-sm sm:text-base">Adrio Devid</span>
@@ -75,7 +75,7 @@ const Featured = () => {
               </div>
               <div className="text-gray-500 flex gap-4">
                 <div className="">
-                  <Image src={user} alt="" width={25} height={25} className="rounded-full object-cover"/>
+                  <Image src={noavatar} alt="" width={25} height={25} className="rounded-full object-cover"/>
                 </div>
                 <div>
                   <span className="text-sm sm:text-base">Adrio Devid</span>
