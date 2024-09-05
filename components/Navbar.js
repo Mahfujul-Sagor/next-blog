@@ -10,16 +10,23 @@ import { Button } from "./ui/button";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { GiDungeonLight } from "react-icons/gi";
+import { Search } from "./Search";
 
 function Navbar() {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleOpen = () => {
     setOpen(!open);
   };
+
+  const handleSearchOpen = () => {
+    setSearchOpen(!searchOpen);
+  };
+
   const handleSignOutClick = async () => {
     setIsLoading(true);
     try {
@@ -56,7 +63,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="w-full flex justify-center border-b shadow sticky left-0 bg-background top-0 z-[9999]">
+      <div className="w-full flex justify-center border-b shadow sticky left-0 bg-background top-0 z-[999]">
         <nav className="bg-background max-w-[1170px] px-8 xl:px-0 max-[500px]:px-3 w-full py-2 flex justify-evenly items-center max-lg:justify-between">
           <div className="logo flex-1">
             <Link href="/" className="font-bold text-xl sm:text-2xl">
@@ -72,7 +79,7 @@ function Navbar() {
           </ul>
           <div className="flex justify-end items-center gap-6 flex-1  ">
             <div>
-              <CiSearch className="text-3xl" />
+              <CiSearch className="text-3xl" onClick={searchOpen} />
             </div>
             <div>
               <ModeToggle />
@@ -93,6 +100,7 @@ function Navbar() {
         </nav>
       </div>
       {open && <Sidebar />}
+      {searchOpen && <Search />}
     </>
   );
 }
