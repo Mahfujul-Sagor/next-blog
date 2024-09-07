@@ -65,7 +65,7 @@ function Navbar() {
     <>
       <div className="w-full flex justify-center border-b shadow sticky left-0 bg-background top-0 z-[999]">
         <nav className="bg-background max-w-[1170px] px-8 xl:px-0 max-[500px]:px-3 w-full py-2 flex justify-evenly items-center max-lg:justify-between">
-          <div className="logo flex-1">
+          <div className="logo flex-1 flex items-center">
             <Link href="/" className="font-bold text-xl sm:text-2xl">
               <GiDungeonLight className="text-3xl" />Next Blog
             </Link>
@@ -79,7 +79,7 @@ function Navbar() {
           </ul>
           <div className="flex justify-end items-center gap-6 flex-1  ">
             <div>
-              <CiSearch className="text-3xl" onClick={handleSearchOpen} />
+              <CiSearch className="text-3xl cursor-pointer" onClick={handleSearchOpen} />
             </div>
             <div>
               <ModeToggle />
@@ -101,10 +101,9 @@ function Navbar() {
       </div>
       {open && <Sidebar />}
       {searchOpen && (
-        <div className='fixed inset-0 flex justify-center items-center z-[9999] px-4 py-5'>
-          <div onClick={handleSearchOpen} className='w-full min-h-screen backdrop-blur-sm bg-background/25 fixed inset-0 flex justify-center items-center'>
-            <Search/>
-          </div>
+        <div onClick={handleSearchOpen} className='fixed flex justify-center items-center inset-0 z-[999] px-4 py-5'>
+          <div className='w-full min-h-screen backdrop-blur-sm bg-background/25 fixed inset-0'></div>
+          <Search mount={searchOpen}/>
         </div>
       )}
     </>
