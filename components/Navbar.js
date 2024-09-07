@@ -51,7 +51,7 @@ function Navbar() {
       name: "about",
       path: "/about",
     },
-    session && {
+    {
       name: "write",
       path: "/write",
     },
@@ -63,14 +63,14 @@ function Navbar() {
 
   return (
     <>
-      <div className="w-full flex justify-center border-b shadow sticky left-0 bg-background top-0 z-[999]">
-        <nav className="bg-background max-w-[1170px] px-8 xl:px-0 max-[500px]:px-3 w-full py-2 flex justify-evenly items-center max-lg:justify-between">
+      <div className="w-full flex justify-center border-b shadow sticky left-0 bg-background/80 backdrop-blur-md top-0 z-[999]">
+        <nav className="max-w-[1170px] px-8 xl:px-0 max-[500px]:px-3 w-full py-2 flex justify-evenly items-center max-lg:justify-between">
           <div className="logo flex-1 flex items-center">
             <Link href="/" className="font-bold text-xl sm:text-2xl">
               <GiDungeonLight className="text-3xl" />Next Blog
             </Link>
           </div>
-          <ul className="pages hidden gap-8 lg:flex flex-1 justify-center">
+          <ul className="pages font-medium hidden gap-8 lg:flex flex-1 justify-center">
             {navItems.map((item) => (
               <li key={item.path} className="capitalize">
                 <Link href={item.path}>{item.name}</Link>

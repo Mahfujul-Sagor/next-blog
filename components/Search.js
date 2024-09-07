@@ -39,15 +39,14 @@ const Search = ({mount}) => {
   useEffect(() => {
     if (!mount) {
       // Introduce a short delay before clearing the search and updating the URL
-      setTimeout(() => {
-        // Clear input field
+      const timeoutId = setTimeout(() => {
         if (searchInputRef.current) {
           searchInputRef.current.value = '';
         }
-        // Remove query parameter from URL using replace to avoid adding to history
-        const urlWithoutQuery = window.location.pathname;
-        router.replace(urlWithoutQuery); // Replace the URL without query params
-      }, 100); // Delay by 100ms to ensure smooth transition
+        // Ensure clearing the URL after the input has been cleared
+        router.replace(window.location.pathname, undefined, { shallow: true }); // Use shallow routing to avoid a full reload
+      }, 200); // Delay by 200ms for smooth clearing
+      return () => clearTimeout(timeoutId);
     }
   }, [mount, router]);
 
