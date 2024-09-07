@@ -24,7 +24,11 @@ function Navbar() {
   };
 
   const handleSearchOpen = () => {
-    setSearchOpen(!searchOpen);
+    setSearchOpen(true); // Always open the search modal
+  };
+
+  const handleSearchClose = () => {
+    setSearchOpen(false); // Close the search modal
   };
 
   const handleSignOutClick = async () => {
@@ -66,7 +70,7 @@ function Navbar() {
       <div className="w-full flex justify-center border-b shadow sticky left-0 bg-background/80 backdrop-blur-md top-0 z-[999]">
         <nav className="max-w-[1170px] px-8 xl:px-0 max-[500px]:px-3 w-full py-2 flex justify-evenly items-center max-lg:justify-between">
           <div className="logo flex-1 flex items-center">
-            <Link href="/" className="font-bold text-xl sm:text-2xl">
+            <Link href="/" className="font-bold text-2xl">
               <GiDungeonLight className="text-3xl" />Next Blog
             </Link>
           </div>
@@ -101,9 +105,9 @@ function Navbar() {
       </div>
       {open && <Sidebar />}
       {searchOpen && (
-        <div onClick={handleSearchOpen} className='fixed flex justify-center items-center inset-0 z-[999] px-4 py-5'>
+        <div onClick={handleSearchClose} className='fixed flex justify-center items-center inset-0 z-[999] px-4 py-5'>
           <div className='w-full min-h-screen backdrop-blur-sm bg-background/25 fixed inset-0'></div>
-          <Search mount={searchOpen}/>
+          <Search mount={searchOpen} onClose={handleSearchClose}/>
         </div>
       )}
     </>

@@ -16,7 +16,7 @@ const fetchPosts = async (url) => {
   return response.json();
 };
 
-const Search = ({mount}) => {
+const Search = ({mount, onClose}) => {
   const search = useSearchParams();
   const searchInputRef = useRef();
   const [error, setError] = useState(null);
@@ -37,18 +37,23 @@ const Search = ({mount}) => {
   }, [swrError]);
 
   useEffect(() => {
+    console.log('Effect triggered, mount:', mount);
     if (!mount) {
-      // Introduce a short delay before clearing the search and updating the URL
       const timeoutId = setTimeout(() => {
         if (searchInputRef.current) {
           searchInputRef.current.value = '';
+          console.log('Cleared search input');
         }
-        // Ensure clearing the URL after the input has been cleared
-        router.replace(window.location.pathname, undefined, { shallow: true }); // Use shallow routing to avoid a full reload
-      }, 200); // Delay by 200ms for smooth clearing
-      return () => clearTimeout(timeoutId);
+        router.replace(window.location.pathname, undefined, { shallow: true });
+        console.log('URL reset');
+        onClose(); // Trigger closing the modal
+      }, 200);
+      return () => {
+        clearTimeout(timeoutId);
+        console.log('Timeout cleared');
+      };
     }
-  }, [mount, router]);
+  }, [mount, router, onClose]);
 
   const onSearchHandler = async (e) => {
     e.preventDefault();

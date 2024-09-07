@@ -48,7 +48,7 @@ function Sidebar() {
     ].filter(Boolean);
 
   return (
-    <div className='flex flex-col items-center gap-16 bg-background border-b shadow-lg fixed top-[73px] max-[500px]:top-[73px] right-0 w-[50vw] border-l min-h-screen z-[999] lg:hidden'>
+    <div className='flex flex-col items-center gap-16 bg-background border-b shadow-lg fixed top-[79px] right-0 w-[60vw] border-l min-h-screen z-[999] lg:hidden'>
         <ul className="pages w-full font-medium mt-10 flex flex-col items-center">
             {navItems.map( (item) => (
                 <li key={item.path} className='capitalize py-4 w-full text-center text-sm md:text-base'>
