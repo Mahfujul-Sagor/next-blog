@@ -3,7 +3,7 @@
 import { Button } from './ui/button';
 import useSWR from 'swr';
 import { Skeleton } from './ui/skeleton';
-import { MotionH2, MotionLi, MotionP, MotionSpan, MotionUl } from './animation/Animate';
+import { MotionH2, MotionLi, MotionP, MotionSpan } from './animation/Animate';
 
 // Fetch function for SWR
 const fetcher = async (url) => {
