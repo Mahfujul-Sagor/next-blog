@@ -32,7 +32,7 @@ const PostCardList = ({ page, cat, authorId }) => {
 
   if (error) return <p>Error fetching posts: {error.message}</p>;
 
-  const { posts = [], count = 0 } = data;
+  const { posts = [], count = 0 } = data || {posts: [], count: 0};
 
   const POST_PER_PAGE = 9; // Define posts per page
 
@@ -52,9 +52,9 @@ const PostCardList = ({ page, cat, authorId }) => {
             ))}
           </div>
         ) : (
-          posts.length > 0 ? (
+          posts?.length > 0 ? (
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10'>
-              {posts.map((item, index) => (
+              {posts?.map((item, index) => (
                 <MotionDiv 
                 initial={{scale: 0.8, opacity: 0}}
                 whileInView={{scale: 1, opacity: 1}}
@@ -69,7 +69,7 @@ const PostCardList = ({ page, cat, authorId }) => {
             <PostNotFound />
           )
         )}
-      {posts.length > 0 && (
+      {posts?.length > 0 && (
         <PaginationComponent page={page} hasPrev={hasPrev} hasNext={hasNext} />
       )}
     </div>
