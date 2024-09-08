@@ -10,9 +10,6 @@ function Footer() {
             <li className=''>
               <Link href='/privacy-policy'>Privacy</Link>
             </li>
-            <li className=''>
-              <Link href='/contact'>Contact</Link>
-            </li>
           </ul>
         </div>
         <div className='flex-1 flex justify-end items-center'>
