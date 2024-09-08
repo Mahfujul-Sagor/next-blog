@@ -36,8 +36,8 @@ const PostCardList = ({ page, cat, authorId }) => {
 
   const POST_PER_PAGE = 9; // Define posts per page
 
-  const hasPrev = POST_PER_PAGE * (page - 1) > 0; // Determine if previous page exists
-  const hasNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count; // Determine if next page exists
+  const hasPrev = page > 1; // Determine if previous page exists
+  const hasNext = POST_PER_PAGE * page < count; // Determine if next page exists
 
   // Create an array of length 9 for skeleton loaders
   const skeletonArray = Array.from({ length: POST_PER_PAGE });
