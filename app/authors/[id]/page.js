@@ -24,10 +24,7 @@ const SingleAuthor = async ({ params, searchParams }) => {
 
   const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/authors/${id}`
   // Using SWR to fetch author data
-  const { data: author, error, isLoading } = useSWR(
-    url,
-    fetcher
-  );
+  const { data: author, error, isLoading } = useSWR(url, fetcher);
 
   if (error) {
     return <div className='min-h-screen flex justify-center items-center'>No author found</div>; // Show message if no author is found
@@ -76,7 +73,7 @@ const SingleAuthor = async ({ params, searchParams }) => {
           )
         )}
         <hr />
-        <PostCardList page={page} authorId={id} /> {/* Display list of posts by the author */}
+        <PostCardList page={page} authorId={id} />
       </div>
     </div>
   );
