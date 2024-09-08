@@ -34,7 +34,7 @@ export const GET = async (req) => {
 
   try {
     // Fetch posts and count in a single transaction
-    const [posts, count] = await prisma.$transaction([
+    const [posts, totalCount] = await prisma.$transaction([
       prisma.post.findMany(query),
       prisma.post.count({ where: query.where }),
     ]);
@@ -53,7 +53,7 @@ export const GET = async (req) => {
     });
 
     // Return the posts and count with a 200 status
-    return NextResponse.json({ posts: formattedPosts, count }, { status: 200 });
+    return NextResponse.json({ posts: formattedPosts, count: totalCount }, { status: 200 });
   } catch (error) {
     console.error("Error while fetching posts with pagination query", error);
     return NextResponse.json(
