@@ -15,7 +15,7 @@ import { MotionDiv, MotionH1, MotionSpan } from "@/components/animation/Animate"
 // Function to fetch a single post by its slug
 const getPost = async (slug) => {
   try {
-    const response = await fetch(`${process.env.BASE_URL}/api/posts/${slug}` || `http://localhost:3000/api/posts/${slug}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${slug}` || `http://localhost:3000/api/posts/${slug}`);
     if (!response.ok) {
       throw new Error("Failed to fetch post"); // Handle error if post fetching fails
     }

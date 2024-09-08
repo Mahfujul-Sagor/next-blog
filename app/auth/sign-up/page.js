@@ -50,7 +50,7 @@ const SignUp = () => {
     const { name, email, password } = data;
 
     try {
-      const response = await fetch('/api/register', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

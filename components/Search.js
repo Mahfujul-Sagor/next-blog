@@ -29,7 +29,7 @@ const Search = ({ mount, onClose }) => {
 
   // Construct the search query URL
   const encodedSearchQuery = encodeURI(query || '');
-  const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/search?query=${encodedSearchQuery}`;
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/search?query=${encodedSearchQuery}`;
 
   // Use SWR to fetch data based on the query
   const { data, isLoading, error: swrError } = useSWR(query ? url : null, fetchPosts, { revalidateOnFocus: false });

@@ -146,7 +146,7 @@ const WritePage = () => {
       }
 
       // Create new post
-      const response = await fetch('api/posts', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}api/posts`, {
         method: 'POST',
         body: JSON.stringify({
           title: data.title,

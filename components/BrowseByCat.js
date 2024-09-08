@@ -17,7 +17,7 @@ const fetcher = async (url) => {
 };
 
 const BrowseByCat = ({ onCategorySelect }) => {
-  const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/categories`;
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/categories`;
   const { data: categories, isLoading, error } = useSWR(url, fetcher);
 
   return (

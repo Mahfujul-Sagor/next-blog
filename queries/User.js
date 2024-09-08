@@ -45,7 +45,7 @@ export const createUser = async (user) => {
 // Get author by id
 export const GetAuthorById = async (id) => {
   try {
-    const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/edit-author/${id}`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/edit-author/${id}`;
     const response = await fetch(url, { method: 'GET' });
 
     if (!response.ok) {
@@ -80,7 +80,7 @@ export const UpdateAuthor = async (id, data, imageUrl)=> {
     if (data.password) {
       hashedPassword = await hash(data.password, 12);
     }
-    const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/edit-author/${id}`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/edit-author/${id}`;
     const response = await fetch(url, {
       method: 'PUT',
       headers: {
@@ -120,7 +120,7 @@ export const UpdateAuthor = async (id, data, imageUrl)=> {
 // Delete a post
 export const DeleteUser = async (id) => {
   try {
-    const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/delete-author/${id}`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/delete-author/${id}`;
     const response = await fetch(url, {
       method: 'DELETE',
     });

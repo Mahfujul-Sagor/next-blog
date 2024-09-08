@@ -20,7 +20,7 @@ const fetcher = async (url) => {
 
 const PostCardList = ({ page, cat, authorId }) => {
   const {data: session} = useSession();
-  const baseURL = process.env.BASE_URL || 'http://localhost:3000';
+  const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   const url = `${baseURL}/api/posts?page=${page}&cat=${cat || ""}&authorId=${authorId || ""}`;
 
   const { data, error, isLoading } = useSWR(url, fetcher, {

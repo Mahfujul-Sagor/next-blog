@@ -15,10 +15,7 @@ const Toolbar = ({editor}) => {
 
   const setLink = useCallback(() => {
     // for production
-    // const previousUrl = editor.getAttributes('link').href
-
-    // for development
-    const previousUrl = 'https://';
+    const previousUrl = editor.getAttributes('link').href;
 
     const url = window.prompt('URL', previousUrl);
 

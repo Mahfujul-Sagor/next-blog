@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export const UploadPostImage = async (formData)=> {
-  const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/upload-image`;
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/upload-image`;
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -22,7 +22,7 @@ export const UploadPostImage = async (formData)=> {
 
 
 export const UploadAuthorImage = async (formData)=> {
-  const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/upload-author-image`;
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/upload-author-image`;
   try {
     const response = await fetch(url, {
       method: 'POST',

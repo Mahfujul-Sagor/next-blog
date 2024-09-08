@@ -23,7 +23,7 @@ const SingleAuthor = ({ params, searchParams }) => {
   const { id } = params; // Get author ID from URL parameters
   const page = parseInt(searchParams.page) || 1; // Get current page number from URL or default to 1
 
-  const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/authors/${id}`
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/authors/${id}`
   // Using SWR to fetch author data
   const { data: author, error, isLoading } = useSWR(url, fetcher);
 

@@ -160,18 +160,15 @@ const EditAuthor = ({ params }) => {
         imageUrl = result.imageUrl;
       }
 
-          // Prepare the data to be updated
-    const updateData = {
-      ...data,
-      oldpassword: data.oldpassword || undefined,
-      newpassword: data.newpassword || undefined,
-    };
-
-    // Update the author details in the database
-    const updateResponse = await UpdateAuthor(id, updateData, imageUrl);
+      // Prepare the data to be updated
+      const updateData = {
+        ...data,
+        oldpassword: data.oldpassword || undefined,
+        newpassword: data.newpassword || undefined,
+      };
 
       // Update the author details in the database
-      // const updateResponse = await UpdateAuthor(id, data, imageUrl);
+      const updateResponse = await UpdateAuthor(id, updateData, imageUrl);
 
       if (!updateResponse.ok) {
         throw new Error('Author update failed');

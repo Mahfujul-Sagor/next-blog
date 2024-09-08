@@ -3,7 +3,7 @@ import { createSlug } from "@/lib/CreateSlug";
 // Update a post by id and form data
 export const UpdatePost = async (id, data, imageUrl)=> {
   try {
-    const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/edit-post/${id}`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/edit-post/${id}`;
     const response = await fetch(url, {
       method: 'PUT',
       headers: {
@@ -45,7 +45,7 @@ export const UpdatePost = async (id, data, imageUrl)=> {
 // Delete a post
 export const DeletePost = async (id) => {
   try {
-    const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/delete-post/${id}`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/delete-post/${id}`;
     const response = await fetch(url, {
       method: 'DELETE',
     });
@@ -74,7 +74,7 @@ export const DeletePost = async (id) => {
 // Get post by id
 export const GetPostById = async (id) => {
   try {
-    const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/edit-post/${id}`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/edit-post/${id}`;
     const response = await fetch(url, { method: 'GET' });
 
     if (!response.ok) {

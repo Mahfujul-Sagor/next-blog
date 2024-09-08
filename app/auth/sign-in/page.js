@@ -47,7 +47,7 @@ const SignIn = () => {
   // Handle the form submission
   const onSubmit = async (data) => {
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
