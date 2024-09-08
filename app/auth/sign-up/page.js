@@ -13,6 +13,7 @@ import GoogleSigning from '@/components/GoogleSigning';
 import GithubSigning from '@/components/GithubSigning';
 import { checkIsAuthenticated } from '@/lib/auth/checkIsAuthenticated';
 import Loader from '@/components/Loader';
+import { MotionDiv, MotionP } from '@/components/animation/Animate';
 
 // Zod schema for form validation
 const schema = z.object({
@@ -77,22 +78,37 @@ const SignUp = () => {
   return (
     <div className='w-full min-h-screen flex justify-center items-center px-4'>
       <div className='w-[35rem] flex flex-col gap-10 items-center border rounded-xl px-14 py-16 shadow-xl max-sm:px-10 max-sm:py-12 max-sm:w-[30rem]'>
-        <div className='w-full text-center'>
+        <MotionDiv 
+        initial={{y: -20, opacity: 0}}
+        animate={{y: 0, opacity: 1}}
+        transition={{duration: 0.5}}
+        className='w-full text-center'>
           <h1 className='text-5xl font-semibold mb-4'>Sign up</h1>
           <p className='text-gray-500'>Sign up for your account</p>
-        </div>
-        <div className='w-full flex flex-col gap-4'>
+        </MotionDiv>
+        <MotionDiv 
+        initial={{y: -20, opacity: 0}}
+        animate={{y: 0, opacity: 1}}
+        transition={{duration: 0.5}}
+        className='w-full flex flex-col gap-4'>
           <GoogleSigning text='up'/>
           <GithubSigning text='up'/>
-        </div>
-        <div className='w-full flex justify-center items-center gap-1'>
+        </MotionDiv>
+        <MotionDiv 
+        initial={{scale: 0.8, opacity: 0}}
+        animate={{scale: 1, opacity: 1}}
+        transition={{duration: 0.5}} className='w-full flex justify-center items-center gap-1'>
           <div className='flex-1 h-[1px] bg-gray-500'></div>
           <div className='flex-1 text-gray-500 text-sm text-center'>Or with credentials</div>
           <div className='flex-1 h-[1px] bg-gray-500'></div>
-        </div>
+        </MotionDiv>
         <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
           <div className='flex flex-col gap-4 w-full'>
-            <div className='w-full'>
+            <MotionDiv 
+            initial={{y: -20, opacity: 0}}
+            animate={{y: 0, opacity: 1}}
+            transition={{duration: 0.5}} 
+            className='w-full'>
               <Label htmlFor="name">Name</Label>
               <Input
                 type='text'
@@ -102,8 +118,12 @@ const SignUp = () => {
                 className={errors.name ? 'border-red-500' : ''}
               />
               {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
-            </div>
-            <div className='w-full'>
+            </MotionDiv>
+            <MotionDiv 
+            initial={{y: -20, opacity: 0}}
+            animate={{y: 0, opacity: 1}}
+            transition={{duration: 0.5}} 
+            className='w-full'>
               <Label htmlFor="email">Email</Label>
               <Input
                 type='email'
@@ -113,8 +133,12 @@ const SignUp = () => {
                 className={errors.email ? 'border-red-500' : ''}
               />
               {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
-            </div>
-            <div className='w-full'>
+            </MotionDiv>
+            <MotionDiv 
+            initial={{y: -20, opacity: 0}}
+            animate={{y: 0, opacity: 1}}
+            transition={{duration: 0.5}} 
+            className='w-full'>
               <Label htmlFor="password">Password</Label>
               <Input
                 type='password'
@@ -124,12 +148,16 @@ const SignUp = () => {
                 className={errors.password ? 'border-red-500' : ''}
               />
               {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
-            </div>
+            </MotionDiv>
             {serverError && <p className='text-red-500'>{serverError}</p>}
             <Button type='submit' className={`${isSubmitting ? 'cursor-not-allowed' : ''}`} size='lg'>{isSubmitting ? 'Signing up...' : 'Sign up'}</Button>
           </div>
         </form>
-        <p>Already have an account? <Link href='/auth/sign-in' className='text-blue-600'>Sign in</Link></p>
+        <MotionP 
+        initial={{y: -20, opacity: 0}}
+        animate={{y: 0, opacity: 1}}
+        transition={{duration: 0.5}}
+        >Already have an account? <Link href='/auth/sign-in' className='text-blue-600'>Sign in</Link></MotionP>
       </div>
     </div>
   );

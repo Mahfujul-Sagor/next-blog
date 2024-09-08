@@ -2,8 +2,11 @@ import Image from 'next/image';
 import noavatar from '@/public/no-avatar.png';
 import Link from 'next/link';
 import PostMenu from './PostMenu';
+import nopost from '@/public/no-post.jpg';
+import { MotionDiv } from './animation/Animate';
 
-const PostCard = ({ item }) => {
+
+const PostCard = ({ item, authorId }) => {
   if (!item) {
     return null;
   }
@@ -12,19 +15,26 @@ const PostCard = ({ item }) => {
     <div className='flex flex-col gap-6 h-[556px] justify-center rounded-lg relative'>
       {item.img && (
         <div className='aspect-[370/280] overflow-hidden rounded-lg relative'>
-          <Link href={`/posts/${item.slug}`}>
-            <Image
-              src={item.img}
-              alt={item.title || 'Post Image'}
-              width={400}
-              height={400}
-              priority={true}
-              className='min-h-full w-full rounded-lg object-cover'
-            />
-          </Link>
-          <div className="absolute top-2 right-2">
+          <MotionDiv 
+          initial={{scale: 1}}
+          whileHover={{scale: 1.05}}
+          transition={{duration: 0.2}}
+          className='aspect-[370/280] overflow-hidden rounded-lg relative'
+          >
+            <Link href={`/posts/${item.slug}`} className=''>
+              <Image
+                src={item.img || nopost}
+                alt={item.title || 'Post Image'}
+                width={400}
+                height={400}
+                priority={true}
+                className='min-h-full w-full rounded-lg object-cover'
+              />
+            </Link>
+          </MotionDiv>
+          {authorId === item.user.id && <div className="absolute top-2 right-2">
             <PostMenu id={item.id} />
-          </div>
+          </div>}
         </div>
       )}
       <div className='flex flex-col gap-6 flex-grow'>

@@ -1,5 +1,3 @@
-// TODO: Make this compatible with the edit author form data
-
 import { NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
 import { auth } from '@/auth';

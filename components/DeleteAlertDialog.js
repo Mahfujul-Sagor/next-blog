@@ -18,7 +18,7 @@ const DeleteAlertDialog = ({ isOpen, onClose, onConfirm }) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your post.
+            This action cannot be undone. This will permanently delete the data from database.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

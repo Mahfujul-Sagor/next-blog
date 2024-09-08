@@ -2,11 +2,16 @@ import React from 'react';
 import Image from "next/image";
 import image from '@/public/post3.webp'
 import noavatar from '@/public/no-avatar.png'
+import {MotionDiv} from './animation/Animate.js';
 
 const Featured = () => {
   return (
-    <section className="featured w-full flex flex-col gap-10 justify-center items-center py-16">
-        <div className="w-full flex justify-center items-center max-w-[1170px]">
+    <section className="featured w-full flex flex-col gap-10 justify-center items-center py-16 mt-[30px] md:mt-[50px]">
+        <MotionDiv 
+        initial={{x: -20, opacity: 0}}
+        animate={{x: 0, opacity: 1}}
+        transition={{duration: 0.5}}
+        className="w-full flex justify-center items-center max-w-[1170px]">
           <div className="flex border w-full flex-col gap-8 rounded-xl p-4 shadow lg:flex-row lg:items-center lg:gap-11 lg:p-2.5">
             <div className="rounded-lg aspect-[536/320] w-full h-full">
               <Image src={image} alt="image" className="rounded-lg object-cover min-h-full w-full" width={600} height={600}/>
@@ -33,10 +38,14 @@ const Featured = () => {
               </div>
             </div>
           </div>
-        </div>
+        </MotionDiv>
         <div className="w-full flex flex-col gap-8 justify-center items-center xl:flex-row">
           {/* 1 */}
-          <div className="flex w-full border flex-col gap-8 rounded-xl p-2.5 shadow md:flex-row md:items-center xl:max-w-[570px] lg:gap-6">
+          <MotionDiv 
+          initial={{y: -20, opacity: 0}}
+          animate={{y: 0, opacity: 1}}
+          transition={{duration: 0.5}}
+          className="flex w-full border flex-col gap-8 rounded-xl p-2.5 shadow md:flex-row md:items-center xl:max-w-[570px] lg:gap-6">
             <div className="rounded-lg aspect-[536/320] w-full h-full xl:aspect-[238/180]">
               <Image src={image} alt="" className="rounded-lg object-cover min-h-full w-full" width={300} height={300}/>
             </div>
@@ -60,9 +69,13 @@ const Featured = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </MotionDiv>
           {/* 2 */}
-          <div className="flex w-full border flex-col gap-8 rounded-xl p-2.5 shadow md:flex-row md:items-center xl:max-w-[570px] lg:gap-6">
+          <MotionDiv 
+          initial={{y: -20, opacity: 0}}
+          animate={{y: 0, opacity: 1}}
+          transition={{duration: 0.5}}
+          className="flex w-full border flex-col gap-8 rounded-xl p-2.5 shadow md:flex-row md:items-center xl:max-w-[570px] lg:gap-6">
             <div className="rounded-lg aspect-[536/320] w-full h-full xl:aspect-[238/180]">
               <Image src={image} alt="" className="rounded-lg object-cover min-h-full w-full" width={300} height={300}/>
             </div>
@@ -86,7 +99,7 @@ const Featured = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </MotionDiv>
         </div>
       </section>
   )

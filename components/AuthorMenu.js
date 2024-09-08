@@ -9,9 +9,9 @@ import { useState } from 'react';
 import { CiMenuKebab } from "react-icons/ci";
 import { useToast } from './ui/use-toast';
 import { useRouter } from 'next/navigation';
-import { DeletePost } from "@/queries/Posts";
+import { DeleteUser } from '@/queries/User';
 
-const EditMenu = ({ id }) => {
+const AuthorMenu = ({ id }) => {
   const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const {toast} = useToast();
@@ -25,20 +25,20 @@ const EditMenu = ({ id }) => {
   };
 
   const handleEdit = () => {
-    router.push(`/edit-post/${id}`);
+    router.push(`/edit-author/${id}`);
   };
 
   const handleDelete = async (id)=> {
     try {
-      const response = await DeletePost(id);
+      const response = await DeleteUser(id);
 
       if (response.ok) {
         router.push('/');
       }else {
-        console.error('Failed to delete post');
+        console.error('Failed to delete author');
       }
     } catch (error) {
-      console.error('Failed to delete post', error);
+      console.error('Failed to delete author', error);
     }
   };
 
@@ -48,14 +48,14 @@ const EditMenu = ({ id }) => {
       handleCloseDialog(); // Close dialog after confirmation
       toast({
         title: "Success",
-        description: "Your post was deleted successfully!",
+        description: "Author was deleted successfully!",
         className: 'bg-background text-foreground',
       });
     } catch (error) {
-      console.error('Error deleting post:', error);
+      console.error('Error deleting author:', error);
       toast({
         title: "Error",
-        description: "Failed to delete post. Please try again later.",
+        description: "Failed to delete author. Please try again later.",
         variant: "destructive",
       });
     }
@@ -65,7 +65,7 @@ const EditMenu = ({ id }) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="secondary" className="px-2 py-2 text-2xl rounded-md">
+          <Button variant="secondary" className="py-2 px-2 text-2xl rounded-full">
             <span className=''><CiMenuKebab /></span>
           </Button>
         </DropdownMenuTrigger>
@@ -87,4 +87,4 @@ const EditMenu = ({ id }) => {
   );
 };
 
-export default EditMenu;
+export default AuthorMenu;

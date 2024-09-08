@@ -5,11 +5,12 @@ import Socialicons from "@/components/Socialicons"; // Component for social medi
 import SideMenuCat from "@/components/SideMenuCat"; // Component for side menu categories
 import parse from "html-react-parser"; // Library for parsing HTML strings into React components
 import noavatar from "@/public/no-avatar.png"; // Placeholder image for authors without a profile picture
-import { redirect } from "next/navigation";
-import { checkIsAuthenticated } from "@/lib/auth/checkIsAuthenticated";
 import Link from "next/link";
 import SinglePostSkeleton from "@/components/Skeletons/SinglePostSkeleton";
 import PostMenu from "@/components/PostMenu";
+import nopost from '@/public/no-post.jpg';
+import { auth } from "@/auth";
+import { MotionDiv, MotionH1, MotionSpan } from "@/components/animation/Animate";
 
 // Function to fetch a single post by its slug
 const getPost = async (slug) => {
@@ -27,11 +28,7 @@ const getPost = async (slug) => {
 };
 
 const SinglePost = async ({ params }) => {
-  const isAuthenticated = await checkIsAuthenticated(); // Check if the user is authenticated
-
-  if (!isAuthenticated) {
-    redirect("/auth/sign-in"); // Redirect to sign-in page if not authenticated
-  }
+  const session = await auth();
 
   const { slug } = params; // Destructure the slug from the params
   const post = await getPost(slug); // Fetch the post data based on the slug
@@ -46,27 +43,41 @@ const SinglePost = async ({ params }) => {
         <div className="py-[70px] flex flex-col xl:flex-row justify-center gap-7">
           <div className="post w-full xl:max-w-[770px] flex flex-col gap-12">
             {post?.img && (
-              <div className="rounded-lg relative">
+              <MotionDiv 
+              initial={{scale: 0.8, opacity: 0}}
+              whileInView={{scale: 1, opacity: 1}}
+              transition={{duration: 0.5}}
+              viewport={{once: true}}
+              className="rounded-lg relative">
                 {/* Display post image */}
                 <Image
-                  src={post.img}
+                  src={post.img || nopost}
                   priority={true}
                   alt=""
                   width={400}
                   height={400}
                   className="min-h-full w-full object-cover rounded-lg"
                 />{" "}
-                <div className="absolute top-4 right-4">
+                {session.user.id === post.user.id && <div className="absolute top-4 right-4">
                   <PostMenu id={post.id} />
-                </div>
-              </div>
+                </div>}
+              </MotionDiv>
             )}
             {/* Post title */}
-            <h1 className="text-2xl sm:text-4xl lg:text-[42px] font-bold">
+            <MotionH1 
+            initial={{y: -20, opacity: 0}}
+            whileInView={{y: 0, opacity: 1}}
+            transition={{duration: 0.5}}
+            className="text-2xl sm:text-4xl lg:text-[42px] font-bold">
               {post?.title}
-            </h1>{" "}
+            </MotionH1>{" "}
             {post?.user && (
-              <div className="flex flex-wrap gap-2 items-center sm:gap-4">
+              <MotionDiv 
+              initial={{x: -20, opacity: 0}}
+              whileInView={{x: 0, opacity: 1}}
+              transition={{duration: 0.5}}
+              viewport={{once: true}}
+              className="flex flex-wrap gap-2 items-center sm:gap-4">
                 <div className="text-gray-500 flex flex-wrap gap-2 sm:gap-4 items-center">
                   <div className="flex p-6 rounded-full border">
                     <Link href={`/authors/${post.user.id}`}>
@@ -102,21 +113,37 @@ const SinglePost = async ({ params }) => {
                   </span>{" "}
                   {/* Post category */}
                 </div>
-              </div>
+              </MotionDiv>
             )}
-            <div className="w-full">
+            <MotionDiv 
+            initial={{x: -20, opacity: 0}}
+            whileInView={{x: 0, opacity: 1}}
+            transition={{duration: 0.5}}
+            className="w-full">
               <p>{post?.subtitle}</p>
-            </div>
-            <div className="post-desc flex gap-6 flex-col">
+            </MotionDiv>
+            <MotionDiv 
+            initial={{x: -20, opacity: 0}}
+            whileInView={{x: 0, opacity: 1}}
+            transition={{duration: 0.5}}
+            className="post-desc flex gap-6 flex-col">
               {post.desc ? parse(post.desc) : "Description is not available"}{" "}
               {/* Parse and display post description */}
-            </div>
+            </MotionDiv>
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <span>#{post?.catSlug}</span> {/* Post category as a hashtag */}
+                <MotionSpan 
+                initial={{x: -20, opacity: 0}}
+                whileInView={{x: 0, opacity: 1}}
+                transition={{duration: 0.5}}
+                >#{post?.catSlug}</MotionSpan> {/* Post category as a hashtag */}
               </div>
               <div className="flex gap-2 items-center">
-                <span>Share this:</span>
+                <MotionSpan 
+                initial={{x: -20, opacity: 0}}
+                whileInView={{x: 0, opacity: 1}}
+                transition={{duration: 0.5}}
+                >Share this:</MotionSpan>
                 <Socialicons
                   className="flex gap-2 items-center"
                   iconClass="text-2xl"
@@ -125,7 +152,11 @@ const SinglePost = async ({ params }) => {
               </div>
             </div>
             {post?.user && (
-              <div className="flex flex-wrap xl:flex-nowrap gap-8 items-center">
+              <MotionDiv 
+              initial={{x: -20, opacity: 0}}
+              whileInView={{x: 0, opacity: 1}}
+              transition={{duration: 0.5}}
+              className="flex flex-wrap xl:flex-nowrap gap-8 items-center">
                 <div className="max-w-32 w-full min-h-32 flex items-center">
                   <Link href={`/authors/${post.user.id}`}>
                     <Image
@@ -152,11 +183,16 @@ const SinglePost = async ({ params }) => {
                   )}
                   <Socialicons className="flex items-center gap-4 text-2xl mt-2" />
                 </div>
-              </div>
+              </MotionDiv>
             )}
           </div>
           <div className="flex flex-col gap-8 justify-start">
-            <div className="side-menu max-w-[370px] rounded-lg border p-4 sm:p-8 lg:p-10 flex flex-col gap-8">
+            <MotionDiv 
+            initial={{scale: 0.8, opacity: 0}}
+            whileInView={{scale: 1, opacity: 1}}
+            transition={{duration: 0.5}}
+            viewport={{once: true}}
+            className="side-menu max-w-[370px] rounded-lg border p-4 sm:p-8 lg:p-10 flex flex-col gap-8">
               <h2 className="capitalize text-2xl font-medium">Recent Posts</h2>{" "}
               {/* Recent posts section */}
               <div className="flex flex-col gap-8">
@@ -189,7 +225,7 @@ const SinglePost = async ({ params }) => {
                     </div>
                   ))}
               </div>
-            </div>
+            </MotionDiv>
             <SideMenuCat /> {/* Categories in side menu */}
           </div>
         </div>

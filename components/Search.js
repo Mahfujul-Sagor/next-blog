@@ -5,9 +5,13 @@ import Image from 'next/image';
 import user from '@/public/no-avatar.png';
 import { Skeleton } from './ui/skeleton';
 import { useEffect, useRef, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Input } from './ui/input';
+import debounce from 'lodash.debounce';
+import nopost from '@/public/no-post.jpg';
 
+
+// Function to fetch posts based on the search query
 const fetchPosts = async (url) => {
   const response = await fetch(url);
   if (!response.ok) {
@@ -16,73 +20,74 @@ const fetchPosts = async (url) => {
   return response.json();
 };
 
-const Search = ({mount, onClose}) => {
-  const search = useSearchParams();
+const Search = ({ mount, onClose }) => {
   const searchInputRef = useRef();
-  const [error, setError] = useState(null);
-  const searchQuery = search ? search.get('query') : null;
-  const encodedSearchQuery = encodeURI(searchQuery || '');
+  const [query, setQuery] = useState(''); // Manages search query
+  const [error, setError] = useState(null); // Manages error state
   const router = useRouter();
 
+  // Construct the search query URL
+  const encodedSearchQuery = encodeURI(query || '');
   const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/search?query=${encodedSearchQuery}`;
 
-  const { data, isLoading, error: swrError } = useSWR(searchQuery ? url : null, fetchPosts, {revalidateOnFocus: false});
+  // Use SWR to fetch data based on the query
+  const { data, isLoading, error: swrError } = useSWR(query ? url : null, fetchPosts, { revalidateOnFocus: false });
 
   const posts = data || [];
 
+  // Handle and display any errors from SWR
   useEffect(() => {
     if (swrError) {
-      setError(swrError.message);
+      setError('Something went wrong. Please try again.');
     }
   }, [swrError]);
 
+  // Auto-focus the search input on mount and handle closing the modal
   useEffect(() => {
-    console.log('Effect triggered, mount:', mount);
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
     if (!mount) {
       const timeoutId = setTimeout(() => {
         if (searchInputRef.current) {
-          searchInputRef.current.value = '';
-          console.log('Cleared search input');
+          searchInputRef.current.value = ''; // Clear the input on close
         }
-        router.replace(window.location.pathname, undefined, { shallow: true });
-        console.log('URL reset');
-        onClose(); // Trigger closing the modal
+        onClose(); // Close the modal
       }, 200);
-      return () => {
-        clearTimeout(timeoutId);
-        console.log('Timeout cleared');
-      };
+      return () => clearTimeout(timeoutId); // Cleanup timeout on unmount
     }
-  }, [mount, router, onClose]);
+  }, [mount, onClose]);
 
-  const onSearchHandler = async (e) => {
+  // Debounce search input to limit API calls
+  const debouncedSearch = debounce((searchQuery) => setQuery(searchQuery), 300);
+
+  // Handle form submission and trigger the debounced search
+  const onSearchHandler = (e) => {
     e.preventDefault();
-    const searchInput = searchInputRef.current.value; // Get input value from ref
-    if (searchInput) {
-      router.push(`?query=${encodeURIComponent(searchInput)}`);
-    }
+    const searchQuery = searchInputRef.current.value;
+    debouncedSearch(searchQuery);
   };
 
   return (
-    <div onClick={(e)=> e.stopPropagation()} className='relative border rounded-lg h-[90vh] max-w-[700px] w-full bg-background text-foreground overflow-hidden overflow-y-scroll shadow'>
+    <div onClick={(e) => e.stopPropagation()} className='relative border rounded-lg h-[90vh] max-w-[700px] w-full bg-background text-foreground overflow-hidden overflow-y-scroll shadow'>
       <div>
-        <div className='mb-10'>
+        <div className='mb-8'>
+          {/* Search form */}
           <form onSubmit={onSearchHandler} className='sticky top-0 z-[9999]'>
-            <Input
-              ref={searchInputRef}
-              placeholder='Search' 
-              className='' 
-            />
+            <Input ref={searchInputRef} placeholder='Search' className='' />
           </form>
         </div>
+
+        {/* Error message */}
         {error && (
-          <p className='w-full text-center text-red-500'>{error}</p>
+          <p className='w-full text-center text-red-500 mb-2'>{error}</p>
         )}
         <hr />
+
         <div>
           <div className='mt-8 px-2 w-full'>
+            {/* Display a skeleton loader while the data is loading */}
             {isLoading ? (
-              // Skeleton Loading State
               Array.from({ length: 7 }).map((_, index) => (
                 <div key={index} className='w-full px-2 pt-1 mb-4 flex items-center gap-6'>
                   <Skeleton className='w-20 h-20 rounded-lg' />
@@ -93,15 +98,16 @@ const Search = ({mount, onClose}) => {
                 </div>
               ))
             ) : (
-              // Data Loaded State
+              // Render posts if available, otherwise show "No results"
               posts?.length > 0 ? (
                 posts.map(post => (
                   <div key={post.id} onClick={() => router.push(`/posts/${post.slug}`)} className='w-full px-2 pt-1 mb-4 flex items-center gap-6'>
                     <div>
-                      <Image src={post.img || user} alt='post image' width={80} height={80} className='rounded-lg object-cover min-h-full w-full hidden sm:flex' priority={true} />
+                      <Image src={post.img || nopost} alt='post image' width={80} height={80} className='rounded-lg object-cover min-h-full w-full hidden sm:flex' priority={true} />
                     </div>
                     <div className='flex flex-col justify-center gap-2'>
                       <h2 className='sm:line-clamp-1 line-clamp-2 text-sm md:text-xl font-bold'>{post.title}</h2>
+                      {/* Display post author if available */}
                       {post.user && (
                         <div className='flex items-center gap-2'>
                           <div>
@@ -121,7 +127,7 @@ const Search = ({mount, onClose}) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Search;

@@ -23,7 +23,8 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Loader from "@/components/Loader";
 import { GetPostById, UpdatePost } from "@/queries/Posts";
-import { UploadImage } from "@/queries/Image";
+import { UploadPostImage } from "@/queries/Image";
+import { MotionDiv, MotionH1 } from "@/components/animation/Animate";
 
 // Zod schema for form validation
 const formSchema = z.object({
@@ -74,6 +75,16 @@ const EditPost = ({ params }) => {
           throw new Error('Failed to fetch post');
         }
         const data = getResponse.data;
+
+        if (session && data.user && data.user.id !== session.user.id) {
+          router.push('/'); // Redirect unauthorized users
+          toast({
+            title: "Unauthorized",
+            description: "You are not authorized to edit this post.",
+            variant: "destructive",
+          });
+          return;
+        }
         
         // Set form values with fetched post data
         reset({
@@ -92,6 +103,7 @@ const EditPost = ({ params }) => {
           description: "Failed to load post data.",
           variant: "destructive",
         });
+        return;
       } finally {
         setIsLoading(false);
       }
@@ -102,7 +114,7 @@ const EditPost = ({ params }) => {
     } else if (status === 'unauthenticated') {
       router.push('/auth/sign-in');
     }
-  }, [id, status, router, reset, toast]);
+  }, [id, status, session, router, reset, toast]);
 
   if (isLoading) {
     return <Loader />;  // Show loader while fetching data
@@ -137,7 +149,7 @@ const EditPost = ({ params }) => {
         const formData = new FormData();
         formData.append("file", file);
 
-        const response = await UploadImage(formData);
+        const response = await UploadPostImage(formData);
 
         if (!response.ok) {
           throw new Error('File upload failed');
@@ -184,23 +196,42 @@ const EditPost = ({ params }) => {
 
   return (
     <main className='w-full max-w-[1170px] mx-auto my-[60px]'>
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8">Edit Post</h1>
+      <MotionH1 
+      initial={{y: -20, opacity: 0}}
+      whileInView={{y: 0, opacity: 1}}
+      transition={{duration: 0.5}}
+      className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8">Edit Post</MotionH1>
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5'>
-        <div>
+        <MotionDiv 
+        initial={{y: -20, opacity: 0}}
+        whileInView={{y: 0, opacity: 1}}
+        transition={{duration: 0.5}}
+        viewport={{once: true}}
+        >
           <Label htmlFor="title">Title</Label>
           <Input name='title' id='title' type='text' placeholder='Title' {...register('title')} />
           {errors.title && (
             <p className="text-red-500">{errors.title.message}</p>
           )}
-        </div>
-        <div>
+        </MotionDiv>
+        <MotionDiv 
+        initial={{y: -20, opacity: 0}}
+        whileInView={{y: 0, opacity: 1}}
+        transition={{duration: 0.5}}
+        viewport={{once: true}}
+        >
           <Label htmlFor="subtitle">Subtitle</Label>
           <Input name='subtitle' id='subtitle' type='text' placeholder='Subtitle' {...register('subtitle')} />
           {errors.subtitle && (
             <p className="text-red-500">{errors.subtitle.message}</p>
           )}
-        </div>
-        <div>
+        </MotionDiv>
+        <MotionDiv 
+        initial={{y: -20, opacity: 0}}
+        whileInView={{y: 0, opacity: 1}}
+        transition={{duration: 0.5}}
+        viewport={{once: true}}
+        >
           <Label htmlFor='category'>Category</Label>
           <Select onValueChange={handleCategoryChange} value={selectedCategory}>
             <SelectTrigger className="w-[180px]">
@@ -220,27 +251,42 @@ const EditPost = ({ params }) => {
           {errors.category && (
             <p className="text-red-500">{errors.category.message}</p>
           )}
-        </div>
-        <div>
+        </MotionDiv>
+        <MotionDiv 
+        initial={{y: -20, opacity: 0}}
+        whileInView={{y: 0, opacity: 1}}
+        transition={{duration: 0.5}}
+        viewport={{once: true}}
+        >
           <Label htmlFor='image'>Image</Label>
           <Input type='file' onChange={handleImageChange} id='image' />
           {errors.image && (
             <p className="text-red-500">{errors.image.message}</p>
           )}
-        </div>
+        </MotionDiv>
         {previewImage && (
-          <div className="">
+          <MotionDiv 
+          initial={{scale: 0.8, opacity: 0}}
+          whileInView={{scale: 1, opacity: 1}}
+          transition={{duration: 0.5}} 
+          className=""
+          >
             <Label htmlFor='imagePreview'>Image Preview:</Label>
             <Image src={previewImage} id="imagePreview" alt="Image Preview" width={500} height={500} className="object-cover max-w-full h-auto rounded-lg" />
-          </div>
+          </MotionDiv>
         )}
-        <div>
+        <MotionDiv 
+        initial={{y: -20, opacity: 0}}
+        whileInView={{y: 0, opacity: 1}}
+        transition={{duration: 0.5}}
+        viewport={{once: true}}
+        >
           <Label htmlFor="description">Description</Label>
           <Tiptap description={previewDescription} ref={tiptapRef} onEditorContentChange={handleEditorContentChange} />
           {errors.description && (
             <p className="text-red-500">{errors.description.message}</p>
           )}
-        </div>
+        </MotionDiv>
         <Button type='submit' disabled={isSubmitting} className={`text-base ${isSubmitting ? 'bg-gray-500 cursor-not-allowed' : ''}`}>{isSubmitting ? 'Updating...' : 'Update'}</Button>
       </form>
     </main>

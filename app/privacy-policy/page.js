@@ -1,12 +1,21 @@
+import { MotionDiv, MotionH1 } from '@/components/animation/Animate'
 import React from 'react'
 
 function PrivacyPolicy() {
   return (
     <div className='w-full min-h-screen flex flex-col items-center'>
       <div className='pb-10 pt-20 max-w-[1170px]'>
-        <h1 className='text-5xl font-bold text-center'>Privacy Policy</h1>
+        <MotionH1 
+        initial={{y: -20, opacity: 0}}
+        whileInView={{y: 0, opacity: 1}}
+        transition={{duration: 0.5}}
+        className='text-5xl font-bold text-center'>Privacy Policy</MotionH1>
 
-        <div className='mt-10 text-gray-600 max-lg:text-sm'>
+        <MotionDiv 
+        initial={{x: -20, opacity: 0}}
+        whileInView={{x: 0, opacity: 1}}
+        transition={{duration: 0.5}}
+        className='mt-10 text-gray-600 max-lg:text-sm'>
           <p className='mt-5'>
             As discussed in the introduction post, one of the best things about Ghost is just how much you can customize to turn your site into something unique. Everything about your layout and design can be changed, so you&apos;re not stuck with yet another clone of a social just how much you cannetwork profile.
           </p>
@@ -19,9 +28,13 @@ function PrivacyPolicy() {
           <p className='mt-5'>
             Adipiscing elit. Nulla id quam at justo ullamcorper vulputate. Donec mattis aliquam urna, sed placerat dolor volutpat vel. Maecenas quis feugiat just how much you can customize consectetur adipiscing elit nulla id quam.
           </p>
-        </div>
+        </MotionDiv>
 
-        <div className='mt-10 max-lg:text-sm'>
+        <MotionDiv 
+        initial={{x: -20, opacity: 0}}
+        whileInView={{x: 0, opacity: 1}}
+        transition={{duration: 0.5}} 
+        className='mt-10 max-lg:text-sm'>
           <h2 className='text-4xl font-bold'>Consectetur adipiscing elit</h2>
           <div className="text-gray-600">
             <p className='mt-5'>
@@ -34,9 +47,13 @@ function PrivacyPolicy() {
               As discussed in the introduction post, one of the best things about Ghost is just how much you can customize to turn your site into something unique. Everything about your layout and design can be changed, so you&apos;re not stuck with yet another clone of a social network profile.
             </p>
           </div>
-        </div>
+        </MotionDiv>
 
-        <div className='mt-10 max-lg:text-sm'>
+        <MotionDiv 
+        initial={{x: -20, opacity: 0}}
+        whileInView={{x: 0, opacity: 1}}
+        transition={{duration: 0.5}} 
+        className='mt-10 max-lg:text-sm'>
           <h2 className='text-4xl font-bold'>Donec mattis aliquam urna</h2>
           <div className="text-gray-600">
             <p className='mt-5'>
@@ -72,8 +89,7 @@ function PrivacyPolicy() {
               </li>
             </ol>
           </div>
-        </div>
-
+        </MotionDiv>
       </div>
     </div>
   )

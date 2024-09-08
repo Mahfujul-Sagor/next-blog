@@ -6,6 +6,8 @@ import PostCard from './PostCard';
 import PostCardSkeleton from './Skeletons/PostCardSkeleton'; // Import your skeleton component
 import PaginationComponent from './PaginationComponent';
 import PostNotFound from './PostNotFound';
+import { useSession } from 'next-auth/react';
+import { MotionDiv } from './animation/Animate';
 
 // Function to fetch posts data with pagination, category, and author filters
 const fetcher = async (url) => {
@@ -17,6 +19,7 @@ const fetcher = async (url) => {
 };
 
 const PostCardList = ({ page, cat, authorId }) => {
+  const {data: session} = useSession();
   const baseURL = process.env.BASE_URL || 'http://localhost:3000';
   const url = `${baseURL}/api/posts?page=${page}&cat=${cat || ""}&authorId=${authorId || ""}`;
 
@@ -51,8 +54,15 @@ const PostCardList = ({ page, cat, authorId }) => {
         ) : (
           posts.length > 0 ? (
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10'>
-              {posts.map((item) => (
-                <PostCard key={item.id} item={item} />
+              {posts.map((item, index) => (
+                <MotionDiv 
+                initial={{scale: 0.8, opacity: 0}}
+                whileInView={{scale: 1, opacity: 1}}
+                transition={{duration: 0.5}}
+                viewport={{once: true}}
+                key={item.id}>
+                  <PostCard item={item} authorId={session?.user?.id} />
+                </MotionDiv>
               ))}
             </div>
           ) : (

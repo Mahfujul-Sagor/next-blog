@@ -78,12 +78,12 @@ model Post {
   title     String
   subtitle  String
   desc      String
-  img       String
+  img       String?
   views     Int       @default(0)
   catSlug   String
   cat       Category  @relation(fields: [catSlug], references: [slug])
   userId    String
-  user      User      @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   comments  Comment[]
 }
 
@@ -92,7 +92,7 @@ model Comment {
   createdAt DateTime @default(now())
   desc      String
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   postSlug  String
-  post      Post     @relation(fields: [postSlug], references: [slug])
+  post      Post     @relation(fields: [postSlug], references: [slug], onDelete: Cascade)
 }
