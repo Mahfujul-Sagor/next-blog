@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { Input } from './ui/input';
 import debounce from 'lodash.debounce';
 import nopost from '@/public/no-post.jpg';
+import { MotionDiv } from './animation/Animate';
 
 
 // Function to fetch posts based on the search query
@@ -100,8 +101,13 @@ const Search = ({ mount, onClose }) => {
             ) : (
               // Render posts if available, otherwise show "No results"
               posts?.length > 0 ? (
-                posts.map(post => (
-                  <div key={post.id} onClick={() => router.push(`/posts/${post.slug}`)} className='w-full px-2 pt-1 mb-4 flex items-center gap-6'>
+                posts.map((post, index) => (
+                  <MotionDiv 
+                  initial={{y: -10, opacity: 0}}
+                  whileInView={{y: 0, opacity: 1}}
+                  transition={{delay: 0.2 * index}}
+                  viewport={{once: true}}
+                  key={post.id} onClick={() => router.push(`/posts/${post.slug}`)} className='w-full px-2 pt-1 mb-4 flex items-center gap-6'>
                     <div>
                       <Image src={post.img || nopost} alt='post image' width={80} height={80} className='rounded-lg object-cover min-h-full w-full hidden sm:flex' priority={true} />
                     </div>
@@ -117,7 +123,7 @@ const Search = ({ mount, onClose }) => {
                         </div>
                       )}
                     </div>
-                  </div>
+                  </MotionDiv>
                 ))
               ) : (
                 <p className='w-full text-center'>No result found</p>
