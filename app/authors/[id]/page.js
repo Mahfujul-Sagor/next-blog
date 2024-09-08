@@ -6,6 +6,7 @@ import AuthorMenu from '@/components/AuthorMenu';
 import { auth } from '@/auth';
 import { MotionDiv, MotionH1, MotionP } from '@/components/animation/Animate';
 import { Skeleton } from '@/components/ui/skeleton';
+import useSWR from 'swr';
 
 // Function to fetch author details based on ID
 const fetcher = async (url) => {
