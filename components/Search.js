@@ -107,8 +107,8 @@ const Search = ({ mount, onClose }) => {
               posts?.length > 0 ? (
                 posts.map((post, index) => (
                   <MotionDiv 
-                  initial={{y: -10, opacity: 0}}
-                  whileInView={{y: 0, opacity: 1}}
+                  initial={{x: -10, opacity: 0}}
+                  whileInView={{x: 0, opacity: 1}}
                   transition={{delay: 0.2 * index}}
                   viewport={{once: true}}
                   key={post.id} onClick={() => router.push(`/posts/${post.slug}`)} className='w-full px-2 pt-1 mb-4 flex items-center gap-6'>
