@@ -58,7 +58,7 @@ const SinglePost = async ({ params }) => {
                   height={400}
                   className="min-h-full w-full object-cover rounded-lg"
                 />{" "}
-                {session.user.id === post.user.id && <div className="absolute top-4 right-4">
+                {session?.user?.id === post?.user?.id && <div className="absolute top-4 right-4">
                   <PostMenu id={post.id} />
                 </div>}
               </MotionDiv>

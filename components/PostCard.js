@@ -32,7 +32,7 @@ const PostCard = ({ item, authorId }) => {
               />
             </Link>
           </MotionDiv>
-          {authorId === item.user.id && <div className="absolute top-2 right-2">
+          {authorId === item?.user?.id && <div className="absolute top-2 right-2">
             <PostMenu id={item.id} />
           </div>}
         </div>
