@@ -1,12 +1,13 @@
+"use client";
 import Image from 'next/image';
 import React from 'react';
 import noavatar from '@/public/no-avatar.png'; // Placeholder image for authors without a profile picture
 import PostCardList from '@/components/PostCardList'; // Component to display a list of posts
 import AuthorMenu from '@/components/AuthorMenu';
-import { auth } from '@/auth';
 import { MotionDiv, MotionH1, MotionP } from '@/components/animation/Animate';
 import { Skeleton } from '@/components/ui/skeleton';
 import useSWR from 'swr';
+import { useSession } from 'next-auth/react';
 
 // Function to fetch author details based on ID
 const fetcher = async (url) => {
@@ -16,8 +17,8 @@ const fetcher = async (url) => {
 };
 
 // Main component to display a single author's page
-const SingleAuthor = async ({ params, searchParams }) => {
-  const session = await auth();
+const SingleAuthor = ({ params, searchParams }) => {
+  const {data: session} = useSession();
 
   const { id } = params; // Get author ID from URL parameters
   const page = parseInt(searchParams.page) || 1; // Get current page number from URL or default to 1
@@ -53,7 +54,7 @@ const SingleAuthor = async ({ params, searchParams }) => {
                 transition={{duration: 0.2}}
                 className='relative flex p-6 rounded-full border'>
                 <Image src={author.image || noavatar} alt='Author Image' width={100} height={100} priority={true} className='rounded-full object-cover'/>
-                {author.id === session.user.id && <div className="absolute top-0 -right-2">
+                {author.id === session?.user?.id && <div className="absolute top-0 -right-2">
                   <AuthorMenu id={author.id} />
                 </div>}
               </MotionDiv>
