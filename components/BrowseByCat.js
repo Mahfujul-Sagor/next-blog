@@ -17,7 +17,7 @@ const fetcher = async (url) => {
 };
 
 const BrowseByCat = ({ onCategorySelect }) => {
-  const url = `${process.env.BASE_URL || 'http://localhost:3000'}/api/categories`;
+  const url = `${process.env.BASE_URL || 'https://next-blog-web-app-v1.vercel.app'}/api/categories`;
   const { data: categories, isLoading, error } = useSWR(url, fetcher);
 
   return (
