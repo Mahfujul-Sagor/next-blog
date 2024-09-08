@@ -32,7 +32,7 @@ const PostCardList = ({ page, cat, authorId }) => {
 
   if (error) return <p>Error fetching posts: {error.message}</p>;
 
-  const { posts = [], count = 0 } = data || {posts: [], count: 0};
+  const { posts = [], count = 0 } = data;
 
   const POST_PER_PAGE = 9; // Define posts per page
 
