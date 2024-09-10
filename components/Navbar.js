@@ -25,10 +25,14 @@ function Navbar() {
 
   const handleSearchOpen = () => {
     setSearchOpen(true); // Always open the search modal
+    // Push a new history state when search is opened
+    window.history.pushState({ search: true }, '');
   };
 
   const handleSearchClose = () => {
     setSearchOpen(false); // Close the search modal
+    // Use the back button to close the search
+    window.history.back();
   };
 
   const handleSignOutClick = async () => {
@@ -45,6 +49,21 @@ function Navbar() {
   useEffect(() => {
     setIsLoading(false);
   }, [session]);
+
+  // Listen for back button/gesture to close search
+  useEffect(() => {
+    const handlePopState = (event) => {
+      if (event.state && event.state.search) {
+        setSearchOpen(false); // Close search when back button is pressed
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
 
   const navItems = [
     {

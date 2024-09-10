@@ -62,6 +62,11 @@ const Search = ({ mount, onClose }) => {
   // Debounce search input to limit API calls
   const debouncedSearch = debounce((searchQuery) => setQuery(searchQuery), 300);
 
+  const handlePostClick = (slug)=> {
+    router.push(`/posts/${slug}`);
+    onClose(); // Close the modal
+  };
+
   // Handle form submission and trigger the debounced search
   const onSearchHandler = (e) => {
     e.preventDefault();
@@ -109,9 +114,9 @@ const Search = ({ mount, onClose }) => {
                   <MotionDiv 
                   initial={{x: -10, opacity: 0}}
                   whileInView={{x: 0, opacity: 1}}
-                  transition={{delay: 0.2 * index}}
+                  transition={{delay: 0.1 * index}}
                   viewport={{once: true}}
-                  key={post.id} onClick={() => router.push(`/posts/${post.slug}`)} className='w-full px-2 pt-1 mb-4 flex items-center gap-6'>
+                  key={post.id} onClick={()=> handlePostClick(post.slug)} className='w-full cursor-pointer px-2 pt-1 mb-4 flex items-center gap-6'>
                     <div>
                       <Image src={post.img || nopost} alt='post image' width={80} height={80} className='rounded-lg object-cover min-h-full w-full hidden sm:flex' priority={true} />
                     </div>
