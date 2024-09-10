@@ -63,8 +63,8 @@ const Search = ({ mount, onClose }) => {
   const debouncedSearch = debounce((searchQuery) => setQuery(searchQuery), 300);
 
   const handlePostClick = (slug)=> {
+    onClose();
     router.push(`/posts/${slug}`);
-    onClose(); // Close the modal
   };
 
   // Handle form submission and trigger the debounced search

@@ -31,8 +31,6 @@ function Navbar() {
 
   const handleSearchClose = () => {
     setSearchOpen(false); // Close the search modal
-    // Use the back button to close the search
-    window.history.back();
   };
 
   const handleSignOutClick = async () => {
