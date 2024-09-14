@@ -201,7 +201,7 @@ const EditAuthor = ({ params }) => {
   };
 
   return (
-    <main className='w-full max-w-[1170px] mx-auto my-[60px]'>
+    <main className='w-full min-h-screen max-w-[1170px] mx-auto my-[60px]'>
       <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8">Edit Author</h1>
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5'>
         <MotionDiv 

@@ -188,7 +188,7 @@ const WritePage = () => {
   };
 
   return (
-    <main className='w-full max-w-[1170px] mx-auto my-[60px]'>
+    <main className='w-full min-h-screen max-w-[1170px] mx-auto my-[60px]'>
       <MotionH1 
       initial={{y: -20, opacity: 0}}
       whileInView={{y: 0, opacity: 1}}
